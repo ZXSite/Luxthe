@@ -1,0 +1,8 @@
+<header class="widget-heading">
+    <div class="widget-icon" aria-hidden="true">
+        {{ partial "helper/icon" .Icon }}
+    </div>
+    <h2 class="widget-title section-title">
+        {{ with .URL }}<a href="{{ . }}">{{ $.Title }}</a>{{ else }}{{ .Title }}{{ end }}
+    </h2>
+</header>

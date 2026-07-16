@@ -1,0 +1,3 @@
+{{- $source := resources.Get "js/pagination.js" -}}
+{{- $script := $source | minify | fingerprint "sha256" -}}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" defer></script>

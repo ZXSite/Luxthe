@@ -1,0 +1,5 @@
+{{- $vendor := resources.Get "js/vendor/flexsearch/flexsearch.bundle.min.js" | fingerprint "sha256" -}}
+<script src="{{ $vendor.RelPermalink }}" integrity="{{ $vendor.Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- $source := resources.Get "js/search.js" -}}
+{{- $script := $source | minify | fingerprint "sha256" -}}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" defer></script>

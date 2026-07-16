@@ -1,0 +1,20 @@
+{{- $copyright := .Site.Params.footer.customText -}}
+{{- $since := .Site.Params.footer.since -}}
+<footer class="site-footer">
+    <section class="copyright">
+        {{ if and $since (ne $since (int (now.Format "2006"))) }}
+            {{ $since }} - 
+        {{ end }}
+        &copy; {{ now.Format "2006" }} {{ .Site.Title }}
+    </section>
+    {{ with $copyright }}
+    <section class="powerby">
+        {{ . | markdownify }}
+    </section>
+    {{ end }}
+    {{ with T "footer.motto" }}
+    <section class="powerby footer-motto">
+        {{ . }}
+    </section>
+    {{ end }}
+</footer>

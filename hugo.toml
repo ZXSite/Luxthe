@@ -1,0 +1,75 @@
+[pagination]
+pagerSize = 6
+
+[params]
+mainSections = ["posts"]
+rssFullContent = true
+favicon = ""
+faviconSVG = ""
+faviconPNG = ""
+appleTouchIcon = ""
+webmanifest = ""
+
+[params.footer]
+since = 2026
+customText = ""
+
+[params.dateFormat]
+published = "2006-01-02"
+lastUpdated = "2006-01-02"
+
+[params.sidebar]
+compact = false
+avatar = ""
+emoji = ""
+subtitle = ""
+introduction = ""
+
+[params.article]
+headingAnchor = false
+toc = true
+readingTime = true
+
+[params.article.list]
+showTags = false
+
+[params.article.license]
+enabled = false
+default = "Licensed under CC BY-NC-SA 4.0"
+
+[params.widgets]
+homepage = [
+  { type = "search" },
+  { type = "categories", params = { limit = 10 } },
+  { type = "tag-cloud", params = { limit = 10 } },
+  { type = "archives", params = { limit = 5 } }
+]
+page = [
+  { type = "categories", params = { limit = 10 } },
+  { type = "tag-cloud", params = { limit = 10 } },
+  { type = "toc" }
+]
+
+[params.colorScheme]
+toggle = true
+default = "auto"
+
+[params.imageProcessing]
+autoOrient = false
+
+[params.imageProcessing.external]
+timeout = "5s"
+
+[params.imageProcessing.content]
+enabled = true
+widths = [480, 800, 1200, 1600]
+
+[params.imageProcessing.thumbnail]
+enabled = true
+widths = [360, 720, 1080]
+
+[params.comments]
+enabled = false
+
+[params.analytics]
+enabled = false

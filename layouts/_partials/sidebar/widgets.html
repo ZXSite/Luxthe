@@ -1,0 +1,32 @@
+{{- $scope := default "homepage" .Scope -}}
+{{- $context := .Context -}}
+{{- $widgets := default (slice) (index $context.Site.Params.widgets $scope) -}}
+{{- $isArticleScope := and (eq $scope "page") (partial "helper/is-main-content-page.html" $context) -}}
+{{- $searchAvailable := partial "helper/search-available.html" $context -}}
+
+{{- if partial "helper/has-widget.html" $context -}}
+    <aside class="sidebar widget-sidebar sticky" aria-label="工具与分类"">
+        {{/* Hextra-style search at top of widgets (desktop only) */}}
+        {{- if and $searchAvailable (not $isArticleScope) -}}
+        <div class="widget-search-hextra">
+            {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
+        </div>
+        {{- end -}}
+
+        {{- if and $isArticleScope $searchAvailable -}}
+            {{ partial "widget/search" (dict "Context" $context "Params" dict) }}
+        {{- end -}}
+
+        {{- range $widgets -}}
+            {{- $partialPath := printf "_partials/widget/%s.html" .type -}}
+            {{- if templates.Exists $partialPath -}}
+                {{- if or (not $isArticleScope) (ne .type "search") -}}
+                    {{- $params := default dict .params -}}
+                    {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
+                {{- end -}}
+            {{- else -}}
+                {{ warnf "Widget %s not found" .type }}
+            {{- end -}}
+        {{- end -}}
+    </aside>
+{{- end -}}

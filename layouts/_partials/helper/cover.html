@@ -1,0 +1,29 @@
+{{- $page := . -}}
+{{- $result := false -}}
+
+{{- with $page.Params.image -}}
+  {{- $result = partial "helper/image" (dict "Image" . "Resources" $page.Resources "Context" $page) -}}
+{{- end -}}
+
+{{- if not $result -}}
+  {{- range slice "cover.avif" "cover.webp" "cover.jpg" "cover.jpeg" "cover.png" -}}
+    {{- if not $result -}}
+      {{- with $page.Resources.GetMatch . -}}
+        {{- $result = partial "helper/image" (dict "Image" .Name "Resources" $page.Resources "Context" $page) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Global default fallback: deterministic cover based on page permalink */}}
+{{- if not $result -}}
+  {{- $covers := resources.Match "images/covers/*.svg" -}}
+  {{- if $covers -}}
+    {{- $hash := crypto.FNV32a $page.RelPermalink -}}
+    {{- $index := mod $hash (len $covers) -}}
+    {{- $pick := index $covers $index -}}
+    {{- $result = dict "Resource" $pick "Permalink" $pick.RelPermalink "Width" 1200 "Height" 630 -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $result -}}

@@ -1,0 +1,33 @@
+{{- $page := . -}}
+{{- $hasWidget := false -}}
+{{- $searchAvailable := partial "helper/search-available.html" $page -}}
+{{- $isMainContentPage := partial "helper/is-main-content-page.html" $page -}}
+
+{{- if or $page.IsHome (in (slice "section" "taxonomy" "term") $page.Kind) -}}
+    {{- range (default (slice) (index $page.Site.Params.widgets "homepage")) -}}
+        {{- $partialPath := printf "_partials/widget/%s.html" .type -}}
+        {{- if and (templates.Exists $partialPath) (or (ne .type "search") $searchAvailable) -}}
+            {{- $hasWidget = true -}}
+        {{- end -}}
+    {{- end -}}
+{{- else if $isMainContentPage -}}
+    {{- if $searchAvailable -}}
+        {{- $hasWidget = true -}}
+    {{- end -}}
+
+    {{- range (default (slice) (index $page.Site.Params.widgets "page")) -}}
+        {{- $partialPath := printf "_partials/widget/%s.html" .type -}}
+        {{- if and (templates.Exists $partialPath) (ne .type "search") -}}
+            {{- if eq .type "toc" -}}
+                {{- $tocEnabled := default $page.Site.Params.article.toc $page.Params.toc -}}
+                {{- if and $tocEnabled (ge (len $page.TableOfContents) 100) -}}
+                    {{- $hasWidget = true -}}
+                {{- end -}}
+            {{- else -}}
+                {{- $hasWidget = true -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $hasWidget -}}

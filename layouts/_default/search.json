@@ -1,0 +1,15 @@
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- $records := slice -}}
+{{- range $index, $page := $pages.ByDate.Reverse -}}
+    {{- /* strings.Truncate measures Unicode characters, not UTF-8 bytes. */ -}}
+    {{- $record := dict
+        "id" $index
+        "title" $page.Title
+        "permalink" $page.RelPermalink
+        "content" (strings.Truncate 1200 ($page.Plain | htmlUnescape))
+        "tags" (default (slice) $page.Params.tags)
+        "categories" (default (slice) $page.Params.categories)
+    -}}
+    {{- $records = $records | append $record -}}
+{{- end -}}
+{{- jsonify $records -}}

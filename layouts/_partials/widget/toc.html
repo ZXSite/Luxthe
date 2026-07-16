@@ -1,0 +1,11 @@
+{{ if (.Context.Scratch.Get "TOCEnabled") }}
+    <section class="widget archives widget-toc">
+        {{ partial "widget/heading.html" (dict "Icon" "hash" "Title" (T "article.tableOfContents") "URL" "") }}
+
+        <div class="widget--toc">
+            <nav class="toc-nav" id="TableOfContents">
+                {{ partial "article/components/toc" .Context | safeHTML }}
+            </nav>
+        </div>
+    </section>
+{{ end }}

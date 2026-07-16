@@ -1,0 +1,4 @@
+{{- $source := resources.Get "js/main.js" -}}
+{{- $target := printf "js/main.%s.js" .Language.Lang -}}
+{{- $script := $source | resources.ExecuteAsTemplate $target . | minify | fingerprint "sha256" -}}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" defer></script>

@@ -1,0 +1,4 @@
+{{- $source := resources.Get "js/color-scheme.js" -}}
+{{- $target := printf "js/color-scheme.%s.js" .Language.Lang -}}
+{{- $script := $source | resources.ExecuteAsTemplate $target . | minify | fingerprint "sha256" -}}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>

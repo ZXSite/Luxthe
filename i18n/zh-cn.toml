@@ -1,0 +1,73 @@
+toggleMenu = "切换菜单"
+darkMode = "日/夜"
+backToTop = "回到顶部"
+language = "语言"
+
+[list]
+section = "分区"
+
+[list.page]
+one = "{{ .Count }} 篇文章"
+other = "{{ .Count }} 篇文章"
+
+[list.subsection]
+one = "子分区"
+other = "子分区"
+
+[article]
+back = "返回"
+tableOfContents = "目录"
+relatedContent = "相关内容"
+lastUpdatedOn = "最后更新于"
+
+[article.readingTime]
+one = "阅读约 {{ .Count }} 分钟"
+other = "阅读约 {{ .Count }} 分钟"
+
+[article.alert]
+note = "注意"
+tip = "提示"
+important = "重要"
+warning = "警告"
+caution = "注意"
+
+[article.codeblock]
+copy = "复制"
+copied = "已复制"
+
+[notFound]
+title = "页面未找到"
+subtitle = "您请求的页面不存在，请尝试搜索站点。"
+
+[widget.archives]
+title = "归档"
+more = "更多"
+
+[widget.tagCloud]
+title = "标签"
+
+[widget.categoriesCloud]
+title = "分类"
+
+[search]
+title = "搜索"
+placeholder = "搜索文章..."
+loading = "搜索索引加载中..."
+noResults = "未找到匹配的文章"
+error = "搜索暂时不可用"
+status = "{{ .Count }} 条结果"
+resultTitle = "{{ .Count }} 条结果"
+
+[footer]
+builtWith = "使用 {{ .Generator }} 构建"
+designedBy = "{{ .Theme }}，原始设计 {{ .DesignedBy }}"
+
+[pagination]
+jumpToPage = "跳转到第"
+jump = "跳转"
+pressEnter = "按回车键跳转"
+
+[footer]
+builtWith = "使用 {{ .Generator }} 构建"
+designedBy = "{{ .Theme }}，原始设计 {{ .DesignedBy }}"
+motto = "路虽远，行则将至"

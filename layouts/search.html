@@ -1,0 +1,6 @@
+{{ define "body-class" }}template-search{{ end }}
+
+{{ define "main" }}
+    {{ partial "search/form.html" (dict "Page" .) }}
+    {{ partialCached "footer/footer" . }}
+{{ end }}

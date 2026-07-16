@@ -1,0 +1,19 @@
+{{ define "body-class" }}template-home{{ end }}
+
+{{ define "main" }}
+    {{- $paginator := partial "helper/paginator.html" . -}}
+
+    <section class="article-list">
+        {{ range $index, $element := $paginator.Pages }}
+            {{- .Store.Set "luxtheListIndex" $index -}}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "widget-sidebar" }}
+    {{ partial "sidebar/widgets.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

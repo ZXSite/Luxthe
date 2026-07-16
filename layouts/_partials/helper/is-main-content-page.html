@@ -1,0 +1,2 @@
+{{- $mainSections := default (slice "posts") .Site.Params.mainSections -}}
+{{- return (and .IsPage (ne .Layout "search") (in $mainSections .Section)) -}}

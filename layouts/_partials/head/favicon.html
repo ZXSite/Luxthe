@@ -1,0 +1,30 @@
+{{- $hasStructuredIcons := or .Site.Params.faviconSVG .Site.Params.faviconPNG .Site.Params.appleTouchIcon .Site.Params.webmanifest -}}
+
+{{- with .Site.Params.faviconSVG -}}
+    {{- $href := . | relURL -}}
+    {{- with resources.Get . -}}{{- $href = .RelPermalink -}}{{- end -}}
+    <link rel="icon" type="image/svg+xml" href="{{ $href }}">
+{{- end -}}
+
+{{- with .Site.Params.faviconPNG -}}
+    {{- $href := . | relURL -}}
+    {{- with resources.Get . -}}{{- $href = .RelPermalink -}}{{- end -}}
+    <link rel="icon" type="image/png" href="{{ $href }}">
+{{- end -}}
+
+{{- with .Site.Params.appleTouchIcon -}}
+    {{- $href := . | relURL -}}
+    {{- with resources.Get . -}}{{- $href = .RelPermalink -}}{{- end -}}
+    <link rel="apple-touch-icon" href="{{ $href }}">
+{{- end -}}
+
+{{- with .Site.Params.webmanifest -}}
+    <link rel="manifest" href="{{ . | relURL }}">
+{{- end -}}
+
+{{- if not $hasStructuredIcons -}}
+    {{- $favicon := partial "helper/image" (dict "Image" .Site.Params.favicon "Resources" resources "Context" .) -}}
+    {{- with $favicon -}}
+        <link rel="icon" href="{{ .Permalink }}">
+    {{- end -}}
+{{- end -}}

@@ -1,0 +1,7 @@
+{{- $available := false -}}
+{{- range where .Site.RegularPages "Layout" "search" -}}
+    {{- if .OutputFormats.Get "json" -}}
+        {{- $available = true -}}
+    {{- end -}}
+{{- end -}}
+{{- return $available -}}

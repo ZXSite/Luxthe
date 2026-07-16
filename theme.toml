@@ -1,0 +1,23 @@
+name        = "LuxTHE"
+version     = "2.2.0"
+license     = "MIT"
+licenselink = "https://github.com/ZXSite/newluxthe/blob/main/LICENSE"
+description = "A modern, Chinese-friendly card-style Hugo theme with responsive design"
+homepage    = "https://github.com/ZXSite/newluxthe"
+tags        = ["blog", "responsive", "clean", "light", "dark", "chinese", "cards"]
+features    = [
+    "search",
+    "dark mode",
+    "table of contents",
+    "responsive images",
+    "rss",
+    "i18n",
+    "widget sidebar",
+    "hamburger menu",
+    "category tiles"
+]
+min_version = "0.164.0"
+
+[author]
+    name     = "LuxRex"
+    homepage = "https://github.com/ZXSite"

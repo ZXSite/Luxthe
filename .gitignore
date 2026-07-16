@@ -1,0 +1,13 @@
+/public/
+/public-test/
+/public-subpath/
+/resources/
+/.cache/
+/.superpowers/
+/.hugo_build.lock
+/exampleSite/.hugo_build.lock
+/exampleSite/public*/
+/exampleSite/resources/
+*.tmp
+Thumbs.db
+.DS_Store

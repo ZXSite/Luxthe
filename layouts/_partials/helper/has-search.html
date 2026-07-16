@@ -1,0 +1,17 @@
+{{- $page := . -}}
+{{- $hasSearch := false -}}
+{{- $searchAvailable := partial "helper/search-available.html" $page -}}
+
+{{- if $searchAvailable -}}
+    {{- if or (eq $page.Layout "search") (eq $page.Kind "404") (partial "helper/is-main-content-page.html" $page) -}}
+        {{- $hasSearch = true -}}
+    {{- else if or $page.IsHome (in (slice "section" "taxonomy" "term") $page.Kind) -}}
+        {{- range (default (slice) (index $page.Site.Params.widgets "homepage")) -}}
+            {{- if eq .type "search" -}}
+                {{- $hasSearch = true -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $hasSearch -}}

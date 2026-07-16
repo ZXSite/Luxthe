@@ -1,0 +1,86 @@
+.layout-shell {
+    --site-sidebar-width: minmax(180px, 25%);
+    --widget-sidebar-width: minmax(220px, 30%);
+
+    width: 100%;
+    min-height: 100vh;
+    margin-inline: auto;
+    padding: var(--main-top-padding) var(--container-padding) 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "site"
+        "main";
+    align-items: start;
+    gap: var(--section-separation);
+
+    @include respond(md) {
+        padding-top: 0;
+        grid-template-columns: minmax(0, 1fr) var(--site-sidebar-width);
+        grid-template-areas: "main site";
+    }
+
+    @include respond(lg) {
+        --site-sidebar-width: minmax(180px, 20%);
+    }
+
+    @include respond(xl) {
+        --site-sidebar-width: minmax(180px, 15%);
+        --widget-sidebar-width: minmax(240px, 25%);
+    }
+}
+
+.layout-shell--with-widgets {
+    @include respond(md) {
+        max-width: 1024px;
+    }
+
+    @include respond(lg) {
+        max-width: 1280px;
+        grid-template-columns: var(--widget-sidebar-width) minmax(0, 1fr) var(--site-sidebar-width);
+        grid-template-areas: "widgets main site";
+
+        .widget-sidebar {
+            display: flex;
+        }
+    }
+
+    @include respond(xl) {
+        max-width: 1536px;
+    }
+}
+
+.layout-shell--without-widgets {
+    @include respond(md) {
+        max-width: 768px;
+    }
+
+    @include respond(lg) {
+        max-width: 1024px;
+    }
+
+    @include respond(xl) {
+        max-width: 1280px;
+    }
+}
+
+.site-sidebar {
+    grid-area: site;
+}
+
+.widget-sidebar {
+    grid-area: widgets;
+}
+
+main.main {
+    grid-area: main;
+    min-width: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-separation);
+
+    @include respond(md) {
+        padding-top: var(--main-top-padding);
+    }
+}

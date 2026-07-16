@@ -1,0 +1,68 @@
+toggleMenu = "Toggle menu"
+darkMode = "Dark mode"
+backToTop = "Back to top"
+language = "Language"
+
+[list]
+section = "Section"
+
+[list.page]
+one = "{{ .Count }} page"
+other = "{{ .Count }} pages"
+
+[list.subsection]
+one = "Subsection"
+other = "Subsections"
+
+[article]
+back = "Back"
+tableOfContents = "Table of contents"
+relatedContent = "Related content"
+lastUpdatedOn = "Last updated on"
+
+[article.readingTime]
+one = "{{ .Count }} minute read"
+other = "{{ .Count }} minutes read"
+
+[article.alert]
+note = "Note"
+tip = "Tip"
+important = "Important"
+warning = "Warning"
+caution = "Caution"
+
+[article.codeblock]
+copy = "Copy"
+copied = "Copied"
+
+[notFound]
+title = "Page not found"
+subtitle = "The page you requested does not exist. Try searching the site."
+
+[widget.archives]
+title = "Archives"
+more = "More"
+
+[widget.tagCloud]
+title = "Tags"
+
+[widget.categoriesCloud]
+title = "Categories"
+
+[search]
+title = "Search"
+placeholder = "Search articles..."
+loading = "Loading search index..."
+noResults = "No matching articles"
+error = "Search is temporarily unavailable"
+status = "{{ .Count }} results"
+resultTitle = "{{ .Count }} results"
+
+[footer]
+builtWith = "Built with {{ .Generator }}"
+designedBy = "{{ .Theme }}, originally designed by {{ .DesignedBy }}"
+
+[pagination]
+jumpToPage = "Jump to page"
+jump = "Go"
+pressEnter = "Press Enter to jump"
