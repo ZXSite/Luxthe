@@ -31,3 +31,6 @@ hasCJKLanguage = true
     [params.colorScheme]
         toggle = true
         default = "light"
+
+[params.opengraph.twitter]
+    card = "summary_large_image"

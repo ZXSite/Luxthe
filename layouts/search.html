@@ -1,6 +1,7 @@
 {{ define "body-class" }}template-search{{ end }}
 
 {{ define "main" }}
+    <h1 class="visually-hidden">{{ .Title }}</h1>
     {{ partial "search/form.html" (dict "Page" .) }}
     {{ partialCached "footer/footer" . }}
 {{ end }}

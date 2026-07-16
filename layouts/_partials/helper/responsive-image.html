@@ -26,8 +26,14 @@ Params:
     {{- end -}}
 {{- end -}}
 
-<img {{- range $k, $v := $attributes -}}
-    {{- if $v -}}
-        {{- printf " %s=%q" (lower $k) (printf "%v" $v) | safeHTMLAttr -}}
-    {{- end -}}
-{{- end -}}>
+<img
+    src="{{ default "" (index $attributes "src") }}"
+    {{ with index $attributes "srcset" }}srcset="{{ . }}"{{ end }}
+    {{ with index $attributes "sizes" }}sizes="{{ . }}"{{ end }}
+    {{ with index $attributes "width" }}width="{{ . }}"{{ end }}
+    {{ with index $attributes "height" }}height="{{ . }}"{{ end }}
+    {{ with index $attributes "loading" }}loading="{{ . }}"{{ end }}
+    {{ with index $attributes "fetchpriority" }}fetchpriority="{{ . }}"{{ end }}
+    alt="{{ default "" (index $attributes "alt") }}"
+    {{ with index $attributes "title" }}title="{{ . }}"{{ end }}
+>

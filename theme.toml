@@ -1,5 +1,5 @@
 name        = "LuxTHE"
-version     = "2.2.1"
+version     = "2.3.0"
 license     = "MIT"
 licenselink = "https://github.com/ZXSite/LuxTHE/blob/main/LICENSE"
 description = "A modern, Chinese-friendly card-style Hugo theme with responsive design"
@@ -21,3 +21,13 @@ min_version = "0.164.0"
 [author]
     name     = "LuxRex"
     homepage = "https://github.com/ZXSite"
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.164.0"
+[original]
+    name = "Hugo Theme Stack"
+    author = "Jimmy Cai"
+    homepage = "https://jimmycai.com"
+    repo = "https://github.com/CaiJimmy/hugo-theme-stack"

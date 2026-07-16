@@ -5,6 +5,7 @@
         {{- block "head" . -}}{{ end }}
     </head>
     <body class="{{ block `body-class` . }}{{ end }}">
+        <a class="skip-link" href="#main-content">{{ T "skipToContent" }}</a>
         {{- partial "head/colorScheme" . -}}
 
         {{/* The semantic shell adds a widget column only when this page renders widgets. */}}
@@ -14,7 +15,7 @@
                 {{ partial "sidebar/site.html" . }}
             {{- end -}}
             {{- block "widget-sidebar" . -}}{{ end }}
-            <main class="main">
+            <main id="main-content" class="main" tabindex="-1">
                 {{- block "main" . }}{{- end }}
             </main>
         </div>

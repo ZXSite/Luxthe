@@ -67,3 +67,9 @@ motto = "The road may be long, but persistence brings success"
 jumpToPage = "Jump to page"
 jump = "Go"
 pressEnter = "Press Enter to jump"
+
+[sidebar]
+siteNavigation = "Site navigation"
+widgets = "Widgets and taxonomies"
+categories = "Categories"
+skipToContent = "Skip to main content"
