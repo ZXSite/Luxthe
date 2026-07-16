@@ -1,0 +1,14 @@
+:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+#toggle-menu:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.highlight:focus-within .copyCodeButton,
+.copyCodeButton:focus-visible {
+    opacity: 1;
+}

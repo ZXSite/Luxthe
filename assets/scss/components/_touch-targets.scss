@@ -1,0 +1,16 @@
+#toggle-menu,
+.pagination .page-link,
+.search-form button,
+#dark-mode-toggle {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+}
+
+@media (pointer: coarse) {
+    .site-sidebar__hamburger-categories__pill {
+        min-block-size: 44px;
+    }
+    .contact-pill {
+        min-block-size: 44px;
+    }
+}
