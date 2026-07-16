@@ -19,7 +19,7 @@
 {{- if not $result -}}
   {{- $covers := resources.Match "images/covers/*.svg" -}}
   {{- if $covers -}}
-    {{- $hash := crypto.FNV32a $page.RelPermalink -}}
+    {{- $hash := hash.FNV32a $page.RelPermalink -}}
     {{- $index := mod $hash (len $covers) -}}
     {{- $pick := index $covers $index -}}
     {{- $result = dict "Resource" $pick "Permalink" $pick.RelPermalink "Width" 1200 "Height" 630 -}}

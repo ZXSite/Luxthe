@@ -5,7 +5,7 @@
 {{- $searchAvailable := partial "helper/search-available.html" $context -}}
 
 {{- if partial "helper/has-widget.html" $context -}}
-    <aside class="sidebar widget-sidebar sticky" aria-label="工具与分类"">
+    <aside class="sidebar widget-sidebar sticky" aria-label="{{ T `sidebar.widgets` }}">
         {{/* Hextra-style search at top of widgets (desktop only) */}}
         {{- if and $searchAvailable (not $isArticleScope) -}}
         <div class="widget-search-hextra">

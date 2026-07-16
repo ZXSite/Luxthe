@@ -1,0 +1,33 @@
+baseURL = "https://example.com/"
+title = "LuxTHE Example"
+theme = "LuxTHE"
+defaultContentLanguage = "zh-cn"
+hasCJKLanguage = true
+
+[pagination]
+    pagerSize = 8
+
+[outputs]
+    home = ["HTML", "RSS"]
+
+[permalinks]
+    posts = "/posts/:slug/"
+
+[params]
+    mainSections = ["posts"]
+    [params.sidebar]
+        avatar = ""
+        subtitle = "A modern Hugo theme"
+    [params.article]
+        readingTime = true
+    [params.widgets]
+        homepage = [
+            { type = "search" },
+            { type = "categories", params = { limit = 10 } },
+            { type = "tag-cloud", params = { limit = 10 } },
+            { type = "archives", params = { limit = 5 } },
+        ]
+        page = [{ type = "toc" }]
+    [params.colorScheme]
+        toggle = true
+        default = "light"

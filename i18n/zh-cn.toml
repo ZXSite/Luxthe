@@ -58,10 +58,6 @@ error = "搜索暂时不可用"
 status = "{{ .Count }} 条结果"
 resultTitle = "{{ .Count }} 条结果"
 
-[footer]
-builtWith = "使用 {{ .Generator }} 构建"
-designedBy = "{{ .Theme }}，原始设计 {{ .DesignedBy }}"
-
 [pagination]
 jumpToPage = "跳转到第"
 jump = "跳转"
@@ -71,3 +67,8 @@ pressEnter = "按回车键跳转"
 builtWith = "使用 {{ .Generator }} 构建"
 designedBy = "{{ .Theme }}，原始设计 {{ .DesignedBy }}"
 motto = "路虽远，行则将至"
+
+[sidebar]
+siteNavigation = "站点导航"
+widgets = "工具与分类"
+categories = "分类"

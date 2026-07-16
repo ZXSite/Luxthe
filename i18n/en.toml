@@ -61,6 +61,7 @@ resultTitle = "{{ .Count }} results"
 [footer]
 builtWith = "Built with {{ .Generator }}"
 designedBy = "{{ .Theme }}, originally designed by {{ .DesignedBy }}"
+motto = "The road may be long, but persistence brings success"
 
 [pagination]
 jumpToPage = "Jump to page"

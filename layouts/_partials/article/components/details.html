@@ -13,16 +13,20 @@
     {{ end }}
 
     <div class="article-title-wrapper">
-        <{{ if $IsList }}h2{{ else }}h1{{ end }} class="article-title">
+        {{ if $IsList }}
+        <h2 class="article-title">
             <a href="{{ $Page.RelPermalink }}">
                 {{- $Page.Title -}}
             </a>
-        </{{ if $IsList }}h2{{ else }}h1{{ end }}>
-    
+        </h2>
+        {{ else }}
+        <h1 class="article-title">{{ $Page.Title }}</h1>
+        {{ end }}
+
         {{ with $Page.Params.description }}
-        <h3 class="article-subtitle">
+        <p class="article-subtitle">
             {{ . }}
-        </h3>
+        </p>
         {{ end }}
     </div>
 
