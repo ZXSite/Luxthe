@@ -58,11 +58,6 @@ error = "搜索暂时不可用"
 status = "{{ .Count }} 条结果"
 resultTitle = "{{ .Count }} 条结果"
 
-[pagination]
-jumpToPage = "跳转到第"
-jump = "跳转"
-pressEnter = "按回车键跳转"
-
 [footer]
 builtWith = "使用 {{ .Generator }} 构建"
 designedBy = "{{ .Theme }}，原始设计 {{ .DesignedBy }}"
@@ -73,6 +68,15 @@ siteNavigation = "站点导航"
 widgets = "工具与分类"
 categories = "分类"
 skipToContent = "跳到主要内容"
+
+[pagination]
+label = "分页导航"
+previous = "上一页"
+next = "下一页"
+page = "第 {{ .Count }} 页"
+
 [rss]
-recentIn = "最新内容"
-on = "于"
+recentContent = "最新内容"
+featuredImage = "《{{ .Title }}》的特色图片"
+inLabel = "在"
+onLabel = "于"

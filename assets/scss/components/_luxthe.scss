@@ -7,7 +7,9 @@
   position: fixed;
   z-index: 30;
   right: 20px;
+  right: calc(20px + env(safe-area-inset-right));
   bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
   width: 44px;
   height: 44px;
   display: grid;
@@ -202,4 +204,26 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+/* Touch target sizing */
+#toggle-menu,
+.pagination .page-link,
+.search-form button,
+#dark-mode-toggle {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+}
+
+@media (pointer: coarse) {
+    .site-sidebar__hamburger-categories__pill {
+        min-block-size: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .contact-pill {
+        min-block-size: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
 }
