@@ -65,8 +65,11 @@ jobs:
                       return {p}
                   return set.union(*[flatten(c, f'{p}.{k}' if p else k) for k,c in v.items()]) if v else set()
               return {p}
-          zh = flatten(tomllib.loads(open('i18n/zh-cn.toml','rb').read()))
-          en = flatten(tomllib.loads(open('i18n/en.toml','rb').read()))
+          def load(path):
+              with open(path, 'rb') as f:
+                  return tomllib.load(f)
+          zh = flatten(load('i18n/zh-cn.toml'))
+          en = flatten(load('i18n/en.toml'))
           only_zh = zh-en; only_en = en-zh
           if only_zh or only_en:
               print('zh-only:', sorted(only_zh), 'en-only:', sorted(only_en))

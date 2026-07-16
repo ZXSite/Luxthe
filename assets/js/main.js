@@ -10,6 +10,16 @@
     if (target.value) window.location.assign(target.value);
   });
 
+  // Keyboard: Escape closes menu
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mainMenu?.classList.contains('show')) {
+      mainMenu.classList.remove('show');
+      menuButton?.classList.remove('is-active');
+      menuButton?.setAttribute('aria-expanded', 'false');
+      menuButton?.focus();
+    }
+  });
+
   menuButton?.addEventListener('click', () => {
     const open = mainMenu?.classList.toggle('show') ?? false;
     menuButton.classList.toggle('is-active', open);

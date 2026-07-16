@@ -48,6 +48,10 @@
     padding-top: 0;
     padding-bottom: 0;
 }
+.site-sidebar__hamburger-search .search-form button {
+    background: transparent;
+    border-color: var(--card-separator-color);
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -182,6 +186,10 @@
     color: #fff;
 }
 
+[data-scheme="dark"] .article-list--tile article .article-details {
+    background: linear-gradient(135deg, #176b87, #1f5a6e);
+}
+
 /* Skip link */
 .skip-link {
     position: absolute;
@@ -236,12 +244,8 @@
 @media (pointer: coarse) {
     .site-sidebar__hamburger-categories__pill {
         min-block-size: 44px;
-        display: inline-flex;
-        align-items: center;
     }
     .contact-pill {
         min-block-size: 44px;
-        display: inline-flex;
-        align-items: center;
     }
 }

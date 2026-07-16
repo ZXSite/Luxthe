@@ -216,6 +216,12 @@
         a.header-anchor {
             transition: opacity 0.3s ease;
             opacity: 0;
+
+            &:focus-visible {
+                opacity: 1;
+                outline: 3px solid var(--accent-color);
+                outline-offset: 2px;
+            }
             position: absolute;
             left: 0;
             width: var(--card-padding);

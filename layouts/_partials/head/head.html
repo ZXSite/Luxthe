@@ -12,6 +12,11 @@
 <link rel="canonical" href="{{ . }}">
 {{ else }}
 <link rel="canonical" href="{{ .Permalink }}">
+    {{- if .IsTranslated -}}
+    {{- range .AllTranslations -}}
+    <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
+    {{- end -}}
+    {{- end -}}
 {{ end }}
 
 {{- partial "head/style.html" . -}}
