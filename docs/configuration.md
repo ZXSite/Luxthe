@@ -71,7 +71,7 @@ page = [
 
 On desktop main-section article pages, local search is pinned before this configurable array and duplicate `search` entries are ignored. The search field remains the target of `Ctrl+K` on Windows/Linux and `Command+K` on macOS.
 
-Hugo merges project configuration before theme defaults. When a site defines `params.widgets.homepage` or `params.widgets.page`, that array replaces the theme array rather than extending it. LuxTHE-based sites should remove their old page array or follow [the migration guide](migrating-from-stack.md).
+Hugo merges project configuration before theme defaults. When a site defines `params.widgets.homepage` or `params.widgets.page`, that array replaces the theme array rather than extending it. LuxTHE-based sites should remove their old page array or follow [the migration guide](migrating-from-luxrex.md).
 
 ## Leaf bundles and images
 

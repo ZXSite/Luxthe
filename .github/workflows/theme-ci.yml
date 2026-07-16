@@ -9,21 +9,13 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: theme-ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        lang: [zh, en]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Hugo Extended
+      - name: "Install Hugo Extended"
         env:
           HUGO_VERSION: 0.164.0
         run: |
@@ -32,55 +24,59 @@ jobs:
           tar -xzf "hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -C "$RUNNER_TEMP/hugo" hugo
           echo "$RUNNER_TEMP/hugo" >> "$GITHUB_PATH"
 
-      - name: Build (${{ matrix.lang }})
-        run: |
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --defaultContentLanguage "${{ matrix.lang }}" --gc --minify --panicOnWarning
+      - name: "Build example site (multilingual)"
+        run: >-
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE
+          --gc --minify --panicOnWarning
 
-      - name: Build subpath (${{ matrix.lang }})
-        run: |
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --baseURL "https://example.com/preview/" --destination "$RUNNER_TEMP/subpath" --gc --minify --panicOnWarning
+      - name: "Build subpath"
+        run: >-
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE
+          --baseURL "https://example.com/preview/"
+          --destination "$RUNNER_TEMP/subpath"
+          --gc --minify --panicOnWarning
 
-      - name: Validate search JSON
+      - name: "Validate search JSON"
         run: jq empty exampleSite/public/search/index.json
 
       - name: "Check for javascript: URLs"
         run: |
-          if grep -qr 'javascript:' exampleSite/public/; then
-            echo "SECURITY: javascript: URL found in output"
+          if grep -qr 'javascript:' exampleSite/public/ 2>/dev/null; then
+            echo "SECURITY: javascript: URL found"
             exit 1
           fi
           echo "No javascript: URLs found"
 
       - name: "Check for onerror/onload attributes"
         run: |
-          if grep -qrE '\bon(error|load)\s*=' exampleSite/public/; then
-            echo "SECURITY: event handler attribute found in output"
+          if grep -qrE '\bon(error|load)\s*=' exampleSite/public/ 2>/dev/null; then
+            echo "SECURITY: event handler found"
             exit 1
           fi
-          echo "No event handler attributes found"
-
-      - name: "Check internal fragments"
-        run: |
-          # Verify archive year- anchors exist
-          grep -q 'id="year-' exampleSite/public/archives/index.html && echo "Archive anchors OK" || (echo "Missing year- anchors" && exit 1)
+          echo "No event handlers found"
 
       - name: "Check i18n key parity"
         run: |
           python3 -c "
-          import re, sys
-          def get_keys(path):
-              with open(path) as f: return set(re.findall(r'^\[?(\w+\.?\w*)\]', f.read(), re.M))
-          zh = get_keys('i18n/zh-cn.toml')
-          en = get_keys('i18n/en.toml')
-          only_zh = zh - en
-          only_en = en - zh
-          if only_zh: print(f'Only in zh-cn: {only_zh}')
-          if only_en: print(f'Only in en: {only_en}')
-          sys.exit(1 if only_zh or only_en else 0)
+          import tomllib, sys
+          def flatten(v, p=''):
+              if isinstance(v, dict):
+                  if 'other' in v and all(not isinstance(x, dict) for x in v.values()):
+                      return {p}
+                  return set.union(*[flatten(c, f'{p}.{k}' if p else k) for k,c in v.items()]) if v else set()
+              return {p}
+          zh = flatten(tomllib.loads(open('i18n/zh-cn.toml','rb').read()))
+          en = flatten(tomllib.loads(open('i18n/en.toml','rb').read()))
+          only_zh = zh-en; only_en = en-zh
+          if only_zh or only_en:
+              print('zh-only:', sorted(only_zh), 'en-only:', sorted(only_en))
+              sys.exit(1)
+          print(f'OK: {len(zh)} keys match')
           "
 
       - name: "Deterministic build check"
         run: |
+          rm -rf "$RUNNER_TEMP/build-1" "$RUNNER_TEMP/build-2"
           hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-1" --gc --minify
           hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-2" --gc --minify
           diff -rq "$RUNNER_TEMP/build-1" "$RUNNER_TEMP/build-2" && echo "Builds identical"

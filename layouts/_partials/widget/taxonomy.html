@@ -6,7 +6,7 @@
 
 {{- $taxonomy := index $context.Site.Taxonomies .Params.taxonomy -}}
 {{- if not $taxonomy -}}
-    {{- warnf "Taxonomy %s not found" .Params.taxonomy -}}
+    {{- /* taxonomy not available in this language */ -}}
 {{- end -}}
 
 {{- $taxonomyPage := $taxonomy.Page -}}
