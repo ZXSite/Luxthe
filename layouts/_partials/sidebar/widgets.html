@@ -6,26 +6,22 @@
 
 {{- if partial "helper/has-widget.html" $context -}}
     <aside class="sidebar widget-sidebar sticky" aria-label="{{ T `sidebar.widgets` }}">
-        {{/* Hextra-style search at top of widgets (desktop only) */}}
+        {{/* Search at top of widgets (desktop only) */}}
         {{- if and $searchAvailable (not $isArticleScope) -}}
         <div class="widget-search-hextra">
             {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
         </div>
         {{- end -}}
 
-        {{- if and $isArticleScope $searchAvailable -}}
-            {{ partial "widget/search" (dict "Context" $context "Params" dict) }}
-        {{- end -}}
-
         {{- range $widgets -}}
+            {{- if ne .type "search" -}}
             {{- $partialPath := printf "_partials/widget/%s.html" .type -}}
             {{- if templates.Exists $partialPath -}}
-                {{- if or (not $isArticleScope) (ne .type "search") -}}
-                    {{- $params := default dict .params -}}
-                    {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
-                {{- end -}}
+                {{- $params := default dict .params -}}
+                {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
             {{- else -}}
                 {{ warnf "Widget %s not found" .type }}
+            {{- end -}}
             {{- end -}}
         {{- end -}}
     </aside>

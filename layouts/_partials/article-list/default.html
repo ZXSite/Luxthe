@@ -1,4 +1,4 @@
-{{ $image := partialCached "helper/cover.html" . }}
+{{ $image := partialCached "helper/cover.html" . .RelPermalink }}
 <article class="{{ if $image }}has-image{{ end }}">
     {{ partial "article/components/header" (dict "Page" . "IsList" true) }}
 </article>

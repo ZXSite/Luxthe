@@ -34,7 +34,7 @@ jobs:
 
       - name: Build (${{ matrix.lang }})
         run: |
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --gc --minify --panicOnWarning
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --defaultContentLanguage "${{ matrix.lang }}" --gc --minify --panicOnWarning
 
       - name: Build subpath (${{ matrix.lang }})
         run: |
@@ -43,7 +43,7 @@ jobs:
       - name: Validate search JSON
         run: jq empty exampleSite/public/search/index.json
 
-      - name: Check for javascript: URLs
+      - name: "Check for javascript: URLs"
         run: |
           if grep -qr 'javascript:' exampleSite/public/; then
             echo "SECURITY: javascript: URL found in output"
@@ -51,7 +51,7 @@ jobs:
           fi
           echo "No javascript: URLs found"
 
-      - name: Check for onerror/onload attributes
+      - name: "Check for onerror/onload attributes"
         run: |
           if grep -qrE '\bon(error|load)\s*=' exampleSite/public/; then
             echo "SECURITY: event handler attribute found in output"
@@ -59,12 +59,12 @@ jobs:
           fi
           echo "No event handler attributes found"
 
-      - name: Check internal fragments
+      - name: "Check internal fragments"
         run: |
           # Verify archive year- anchors exist
           grep -q 'id="year-' exampleSite/public/archives/index.html && echo "Archive anchors OK" || (echo "Missing year- anchors" && exit 1)
 
-      - name: Check i18n key parity
+      - name: "Check i18n key parity"
         run: |
           python3 -c "
           import re, sys
@@ -79,7 +79,7 @@ jobs:
           sys.exit(1 if only_zh or only_en else 0)
           "
 
-      - name: Deterministic build check
+      - name: "Deterministic build check"
         run: |
           hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-1" --gc --minify
           hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-2" --gc --minify

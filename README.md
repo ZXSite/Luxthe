@@ -62,7 +62,7 @@ Comments and analytics are disabled and empty by default. Enabling third-party c
 
 LuxTHE supports separate SVG, PNG, Apple Touch Icon and web manifest paths through `params.faviconSVG`, `params.faviconPNG`, `params.appleTouchIcon`, and `params.webmanifest`. The older single `params.favicon` setting remains available as a fallback.
 
-See [configuration](docs/configuration.md), [migration from LuxTHE](docs/migrating-from-stack.md), [Cloudflare Pages deployment](docs/cloudflare-pages.md), and the [中文说明](README.zh-CN.md).
+See [configuration](docs/configuration.md), [migration from LuxTHE](docs/migrating-from-luxrex.md), [Cloudflare Pages deployment](docs/cloudflare-pages.md), and the [中文说明](README.zh-CN.md).
 
 ## License
 

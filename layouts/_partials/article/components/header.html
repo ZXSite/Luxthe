@@ -1,7 +1,7 @@
 {{- $IsList := .IsList -}}
 {{- $Page := .Page -}}
 <header class="article-header">
-    {{- $image := partialCached "helper/cover.html" $Page -}}
+    {{- $image := partialCached "helper/cover.html" $Page $Page.RelPermalink -}}
     {{ if $image }}
     <div class="article-image">
         <a href="{{ $Page.RelPermalink }}">

@@ -6,10 +6,10 @@
 {{- $title := partialCached "data/title" . .RelPermalink -}}
 {{- $description := partialCached "data/description" . .RelPermalink -}}
 
-<meta name="twitter:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
-<meta name="twitter:description" {{ printf "content=%q" $description | safeHTMLAttr }}>
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
 
-{{- $image := partialCached "helper/cover.html" . -}}
+{{- $image := partialCached "helper/cover.html" . .RelPermalink -}}
 {{- if $image -}}
     <meta name="twitter:card" content="{{ .Site.Params.opengraph.twitter.card }}">
     <meta name="twitter:image" content='{{ absURL $image.Permalink }}' />

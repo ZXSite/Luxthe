@@ -1,7 +1,7 @@
 {{ partial "back-to-top.html" . }}
 {{ partialCached "footer/components/script.html" . }}
-{{ if partial "helper/has-search.html" . }}
-    {{ partialCached "footer/components/search-script.html" . }}
+{{ if partialCached "helper/search-available.html" . .Language.Lang }}
+    {{ partialCached "footer/components/search-script.html" . .Language.Lang }}
 {{ end }}
 {{ if and (or .IsHome (in (slice "section" "taxonomy" "term") .Kind)) (gt .Paginator.TotalPages 1) }}
     {{ partialCached "footer/components/pagination-script.html" . }}

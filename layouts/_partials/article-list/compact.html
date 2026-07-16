@@ -27,7 +27,7 @@
             {{- end -}}
         </div>
 
-        {{- $image := partialCached "helper/cover.html" . -}}
+        {{- $image := partialCached "helper/cover.html" . .RelPermalink -}}
         {{ if $image }}
         <div class="article-image">
             {{ partial "helper/thumbnail-image" (dict 

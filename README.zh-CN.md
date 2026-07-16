@@ -62,7 +62,7 @@ content/posts/my-post/
 
 主题支持分别设置 SVG、PNG、Apple Touch Icon 和 Web Manifest：使用 `params.faviconSVG`、`params.faviconPNG`、`params.appleTouchIcon`、`params.webmanifest`。旧的单一 `params.favicon` 参数仍作为兼容回退。
 
-完整参数见[配置手册](docs/configuration.md)。旧 LuxTHE 站点请先按 [LuxTHE 迁移指南](docs/migrating-from-stack.md)清理布局和配置覆盖；部署步骤见 [Cloudflare Pages 指南](docs/cloudflare-pages.md)，英文介绍见 [README](README.md)。
+完整参数见[配置手册](docs/configuration.md)。旧 LuxTHE 站点请先按 [LuxTHE 迁移指南](docs/migrating-from-luxrex.md)清理布局和配置覆盖；部署步骤见 [Cloudflare Pages 指南](docs/cloudflare-pages.md)，英文介绍见 [README](README.md)。
 
 ## 许可证与署名
 
