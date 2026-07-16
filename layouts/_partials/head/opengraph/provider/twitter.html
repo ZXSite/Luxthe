@@ -9,7 +9,7 @@
 <meta name="twitter:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
 <meta name="twitter:description" {{ printf "content=%q" $description | safeHTMLAttr }}>
 
-{{- $image := partial "helper/cover.html" . -}}
+{{- $image := partialCached "helper/cover.html" . -}}
 {{- if $image -}}
     <meta name="twitter:card" content="{{ .Site.Params.opengraph.twitter.card }}">
     <meta name="twitter:image" content='{{ absURL $image.Permalink }}' />

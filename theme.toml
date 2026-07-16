@@ -1,5 +1,5 @@
 name        = "LuxTHE"
-version     = "2.3.0"
+version     = "2.4.0"
 license     = "MIT"
 licenselink = "https://github.com/ZXSite/LuxTHE/blob/main/LICENSE"
 description = "A modern, Chinese-friendly card-style Hugo theme with responsive design"

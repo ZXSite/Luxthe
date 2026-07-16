@@ -1,4 +1,4 @@
-{{- $cover := partial "helper/cover.html" . -}}
+{{- $cover := partialCached "helper/cover.html" . -}}
 <article class="{{ if $cover }}has-image {{ end }}main-article">
     {{ partial "article/components/header" (dict "Page" . "IsList" false) }}
 

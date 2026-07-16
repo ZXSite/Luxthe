@@ -26,7 +26,7 @@ Keep `themes/luxthe` inside the Pages repository checkout. For a Git submodule, 
 
 ## Caching and headers
 
-Copy `exampleSite/static/_headers` to your site's `static/_headers`. Hugo publishes it as `public/_headers`. It gives HTML revalidation semantics, immutable one-year caching to fingerprinted CSS/JS/resource paths, and a self-only Content Security Policy.
+Copy `exampleSite/static/_headers` to your site's `static/_headers`. Hugo publishes it as `public/_headers`. It gives HTML revalidation semantics, immutable one-year caching to fingerprinted CSS/JS/resource paths, and a basic security headers.
 
 Cloudflare Pages applies `_headers` to static responses. The theme emits fingerprinted CSS and JavaScript with Subresource Integrity. Do not cache HTML as immutable: deployments must be able to replace navigation, canonical URLs and content immediately.
 

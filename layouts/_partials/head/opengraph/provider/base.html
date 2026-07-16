@@ -37,7 +37,7 @@
     {{- end -}}
 {{- end -}}
 
-{{ $image := partial "helper/cover.html" . }}
+{{ $image := partialCached "helper/cover.html" . }}
 {{- if $image -}}
     <meta property='og:image' content='{{ absURL $image.Permalink }}' />
 {{- end -}}

@@ -66,3 +66,16 @@ See [configuration](docs/configuration.md), [migration from LuxTHE](docs/migrati
 
 ## License
 
+LuxTHE is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+This theme is derived from [Hugo Theme Stack](https://github.com/CaiJimmy/hugo-theme-stack) by Jimmy Cai, also MIT licensed.
+
+Key differences from Stack include:
+- Three-column CSS Grid layout
+- Chinese-first typography and i18n
+- Pill-style category navigation
+- Inline contact buttons with dark mode toggle
+- FlexSearch-based local search
+- Optimized mobile hamburger menu
+- Cloudflare Pages deployment support
+

@@ -73,3 +73,6 @@ siteNavigation = "Site navigation"
 widgets = "Widgets and taxonomies"
 categories = "Categories"
 skipToContent = "Skip to main content"
+[rss]
+recentIn = "Recent content in"
+on = "on"

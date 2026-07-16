@@ -8,7 +8,7 @@
         <h2 class="section-title">{{ T "widget.categoriesCloud.title" }}</h2>
         <div class="subsection-list">
             <div class="article-list--tile">
-                {{ range $terms }}
+                {{ range $terms.ByWeight }}
                     {{ partial "article-list/tile" . }}
                 {{ end }}
             </div>

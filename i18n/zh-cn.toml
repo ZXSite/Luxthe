@@ -73,3 +73,6 @@ siteNavigation = "站点导航"
 widgets = "工具与分类"
 categories = "分类"
 skipToContent = "跳到主要内容"
+[rss]
+recentIn = "最新内容"
+on = "于"
