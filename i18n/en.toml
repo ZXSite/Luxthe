@@ -69,14 +69,16 @@ widgets = "Widgets and taxonomies"
 categories = "Categories"
 skipToContent = "Skip to main content"
 
-[pagination]
-label = "Pagination"
-previous = "Previous page"
-next = "Next page"
-page = "Page {{ .Count }}"
-
 [rss]
 recentContent = "Recent content"
 featuredImage = "Featured image for {{ .Title }}"
 inLabel = "in"
 onLabel = "on"
+[pagination]
+label = "Pagination"
+previous = "Previous page"
+next = "Next page"
+page = "Page {{ .Number }}"
+jumpToPage = "Jump to page"
+jump = "Go"
+pressEnter = "Press Enter to jump"
