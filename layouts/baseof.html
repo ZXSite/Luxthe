@@ -14,10 +14,10 @@
             {{- block "site-sidebar" . -}}
                 {{ partial "sidebar/site.html" . }}
             {{- end -}}
-            {{- block "widget-sidebar" . -}}{{ end }}
             <main id="main-content" class="main" tabindex="-1">
                 {{- block "main" . }}{{- end }}
             </main>
+            {{- block "widget-sidebar" . -}}{{ end }}
         </div>
         {{ partial "footer/include.html" . }}
     </body>
