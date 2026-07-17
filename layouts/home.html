@@ -1,6 +1,7 @@
 {{ define "body-class" }}template-home{{ end }}
 
 {{ define "main" }}
+    <h1 class="visually-hidden">{{ .Site.Title }}</h1>
     {{- $paginator := partial "helper/paginator.html" . -}}
 
     <section class="article-list">

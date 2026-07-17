@@ -1,0 +1,47 @@
+{{- /* Single source of truth for widget resolution.
+      Input:  Page (required), Scope ("homepage" | "page" | "" = auto-detect)
+      Output: filtered, deduplicated widget array [{type, params}, ...]
+      Rules:
+        - homepage scope reads params.widgets.homepage; page scope reads params.widgets.page
+        - empty array means NO widgets (no hardcoded fallback)
+        - "search" kept only when a search page with JSON output exists
+        - "toc" kept only on articles with a real table of contents
+        - unknown widget templates are dropped; each type rendered once
+        - special pages (search / 404) resolve to no widgets */ -}}
+{{- $page := .Page -}}
+{{- $scope := default "" .Scope -}}
+
+{{- if not $scope -}}
+    {{- if or $page.IsHome (in (slice "section" "taxonomy" "term") $page.Kind) (eq $page.Layout "archives") -}}
+        {{- $scope = "homepage" -}}
+    {{- else if and (eq $page.Kind "page") (ne $page.Layout "search") (partial "helper/is-main-content-page.html" $page) -}}
+        {{- $scope = "page" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $widgets := slice -}}
+{{- if $scope -}}
+    {{- $configured := default (slice) (index (default dict $page.Site.Params.widgets) $scope) -}}
+    {{- $searchAvailable := partialCached "helper/search-available.html" $page $page.Language.Lang -}}
+    {{- $seen := dict -}}
+    {{- range $configured -}}
+        {{- $type := default "" .type -}}
+        {{- $params := default dict .params -}}
+        {{- if and $type (not (index $seen $type)) -}}
+            {{- $ok := templates.Exists (printf "_partials/widget/%s.html" $type) -}}
+            {{- if and $ok (eq $type "search") -}}
+                {{- $ok = $searchAvailable -}}
+            {{- end -}}
+            {{- if and $ok (eq $type "toc") -}}
+                {{- $tocEnabled := default $page.Site.Params.article.toc $page.Params.toc -}}
+                {{- $ok = and (eq $scope "page") $tocEnabled (ge (len $page.TableOfContents) 100) -}}
+            {{- end -}}
+            {{- if $ok -}}
+                {{- $widgets = $widgets | append (dict "type" $type "params" $params) -}}
+                {{- $seen = merge $seen (dict $type true) -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $widgets -}}

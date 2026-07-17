@@ -9,9 +9,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +24,8 @@ jobs:
         env:
           HUGO_VERSION: 0.164.0
         run: |
-          curl -fsSLO "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          curl --fail --retry 3 --connect-timeout 15 --max-time 120 -sSLO "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          echo "fea17b8c076f950bb2e9f9486667bdaa29422883888d509d63931c73e8a9b3a4  hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" | sha256sum -c -
           mkdir -p "$RUNNER_TEMP/hugo"
           tar -xzf "hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -C "$RUNNER_TEMP/hugo" hugo
           echo "$RUNNER_TEMP/hugo" >> "$GITHUB_PATH"
@@ -77,9 +83,45 @@ jobs:
           print(f'OK: {len(zh)} keys match')
           "
 
-      - name: "Deterministic build check"
+      - name: "Language isolation assertions"
         run: |
-          rm -rf "$RUNNER_TEMP/build-1" "$RUNNER_TEMP/build-2"
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-1" --gc --minify
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$RUNNER_TEMP/build-2" --gc --minify
-          diff -rq "$RUNNER_TEMP/build-1" "$RUNNER_TEMP/build-2" && echo "Builds identical"
+          test ! -e exampleSite/public/en/posts/welcome/index.html || { echo "FAIL: zh ghost page leaked into /en/"; exit 1; }
+          grep -q 'lang=en-US' exampleSite/public/en/posts/welcome-to-luxthe/index.html || { echo "FAIL: en article lang attr"; exit 1; }
+          ! grep -q '"/en/' exampleSite/public/search/index.json || { echo "FAIL: zh search index contains /en/ pages"; exit 1; }
+          echo "Language isolation OK"
+
+      - name: "Widget/layout DOM assertions"
+        run: |
+          python3 - << 'PY'
+          import glob, re, sys
+          bad = []
+          for f in glob.glob('exampleSite/public/**/*.html', recursive=True):
+              html = open(f, encoding='utf-8', errors='ignore').read()
+              with_w = 'layout-shell--with-widgets' in html
+              has_aside = 'widget-sidebar' in html
+              if with_w and not has_aside:
+                  bad.append((f, 'with-widgets but no aside'))
+              if not with_w and 'layout-shell--without-widgets' in html and has_aside:
+                  bad.append((f, 'without-widgets but has aside'))
+          for f in ('exampleSite/public/search/index.html', 'exampleSite/public/404.html'):
+              html = open(f, encoding='utf-8', errors='ignore').read()
+              if 'noindex' not in html:
+                  bad.append((f, 'missing noindex'))
+              if 'layout-shell--with-widgets' in html:
+                  bad.append((f, 'special page has widget column'))
+          if bad:
+              print(bad); sys.exit(1)
+          print('DOM assertions OK')
+          PY
+
+      - name: "Deterministic build check (5x)"
+        run: |
+          hashes="$RUNNER_TEMP/hashes.txt"; : > "$hashes"
+          for n in 1 2 3 4 5; do
+            dest="$RUNNER_TEMP/det-$n"; rm -rf "$dest"
+            hugo --source exampleSite --themesDir ../.. --theme LuxTHE --destination "$dest" --gc --minify
+            (cd "$dest" && find . -type f -print0 | sort -z | xargs -0 sha256sum) | sha256sum >> "$hashes"
+          done
+          count=$(cut -d' ' -f1 "$hashes" | sort -u | wc -l)
+          cat "$hashes"
+          test "$count" -eq 1 && echo "Deterministic: single hash" || { echo "FAIL: $count distinct hashes"; exit 1; }

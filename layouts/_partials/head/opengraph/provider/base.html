@@ -13,8 +13,13 @@
     {{- end -}}
 '>
 
-{{- with .Params.locale -}}
-    <meta property='og:locale' content='{{ . }}'>
+{{- with default .Site.Language.Locale .Params.locale -}}
+    <meta property='og:locale' content='{{ replace . "-" "_" }}'>
+{{- end -}}
+{{- if .IsTranslated -}}
+    {{- range .Translations -}}
+    <meta property='og:locale:alternate' content='{{ replace .Language.Locale "-" "_" }}'>
+    {{- end -}}
 {{- end -}}
 
 {{- if .IsPage -}}

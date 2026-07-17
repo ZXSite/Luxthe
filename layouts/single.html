@@ -15,8 +15,6 @@
     {{- $TOCEnabled := and (default .Site.Params.article.toc .Params.toc) $TOCWidgetEnabled -}}
     {{- $hasTOC := ge (len .TableOfContents) 100 -}}
     {{- .Scratch.Set "TOCEnabled" (and $TOCEnabled $hasTOC) -}}
-    
-    {{- .Scratch.Set "hasWidget" (partial "helper/has-widget.html" .) -}}
 {{ end }}
 
 {{ define "main" }}
@@ -37,5 +35,5 @@
 {{ end }}
 
 {{ define "widget-sidebar" }}
-    {{ if .Scratch.Get "hasWidget" }}{{ partial "sidebar/widgets.html" (dict "Context" . "Scope" "page") }}{{ end }}
+    {{ partial "sidebar/widgets.html" (dict "Context" . "Scope" "page") }}
 {{ end }}

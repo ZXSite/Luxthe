@@ -145,7 +145,8 @@
 
     document.addEventListener('keydown', (event) => {
         if ((event.ctrlKey || event.metaKey) && event.key.toLocaleLowerCase() === 'k') {
-            const input = document.querySelector('[data-search-root] input');
+            const input = [...document.querySelectorAll('[data-search-root] input')]
+                .find((candidate) => candidate.getClientRects().length > 0);
             if (input) {
                 event.preventDefault();
                 input.focus();

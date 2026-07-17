@@ -2,17 +2,26 @@
   const colorKey = 'LuxtheColorScheme';
   const menuButton = document.getElementById('toggle-menu');
   const mainMenu = document.getElementById('main-menu');
-  // Sync mobile dark mode toggle with desktop toggle
-  (() => {
-    const mobileBtn = document.getElementById('dark-mode-toggle-mobile');
-    const desktopBtn = document.getElementById('dark-mode-toggle');
-    if (mobileBtn && desktopBtn) {
-      mobileBtn.addEventListener('click', () => desktopBtn.click());
-    }
-  })();
-
-  const colorButton = document.getElementById('dark-mode-toggle');
+  const schemeButtons = [...document.querySelectorAll('#dark-mode-toggle, #dark-mode-toggle-mobile')];
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
   const backToTop = document.getElementById('back-to-top');
+
+  const syncSchemeControls = () => {
+    const dark = document.documentElement.dataset.scheme === 'dark';
+    schemeButtons.forEach((button) => button.setAttribute('aria-pressed', String(dark)));
+    themeColorMeta?.setAttribute('content', dark ? '#131b20' : '#f4f7f9');
+  };
+
+  const setScheme = (next) => {
+    document.documentElement.dataset.scheme = next;
+    try {
+      localStorage.setItem(colorKey, next);
+    } catch {
+      // Storage unavailable: keep the in-session scheme without breaking other scripts.
+    }
+    syncSchemeControls();
+    document.dispatchEvent(new CustomEvent('luxthe:color-scheme', { detail: next }));
+  };
 
   document.querySelector('[data-language-switch]')?.addEventListener('change', (event) => {
     const target = event.currentTarget;
@@ -35,16 +44,11 @@
     menuButton.setAttribute('aria-expanded', String(open));
   });
 
-  if (colorButton) {
-    colorButton.setAttribute('aria-pressed', String(document.documentElement.dataset.scheme === 'dark'));
-  }
-
-  colorButton?.addEventListener('click', () => {
-    const next = document.documentElement.dataset.scheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.scheme = next;
-    localStorage.setItem(colorKey, next);
-    colorButton.setAttribute('aria-pressed', String(next === 'dark'));
-    document.dispatchEvent(new CustomEvent('luxthe:color-scheme', { detail: next }));
+  syncSchemeControls();
+  schemeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setScheme(document.documentElement.dataset.scheme === 'dark' ? 'light' : 'dark');
+    });
   });
 
   if (backToTop) {

@@ -1,6 +1,6 @@
 # Cloudflare Pages Git deployment
 
-This guide targets Cloudflare Pages connected directly to a Git repository. Commit the Hugo site with Luxthe at `themes/luxthe` (copied or as an initialized submodule).
+This guide targets Cloudflare Pages connected directly to a Git repository. Commit the Hugo site with Luxthe at `themes/LuxTHE` (copied or as an initialized submodule).
 
 ## Build settings
 
@@ -22,7 +22,7 @@ HUGO_VERSION=0.164.0
 
 The command uses Cloudflare's deployment URL, so branch previews get correct canonical and asset URLs. If production must advertise a custom-domain canonical URL, use a branch-aware wrapper or a fixed production `--baseURL` while retaining `$CF_PAGES_URL` for previews.
 
-Keep `themes/luxthe` inside the Pages repository checkout. For a Git submodule, make sure the submodule URL is accessible to Cloudflare and the referenced commit is pushed.
+Keep `themes/LuxTHE` inside the Pages repository checkout. For a Git submodule, make sure the submodule URL is accessible to Cloudflare and the referenced commit is pushed.
 
 ## Caching and headers
 

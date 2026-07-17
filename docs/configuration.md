@@ -7,7 +7,7 @@ The theme-level `hugo.toml` is intentional. Hugo loads a theme as a component an
 ## Core site settings
 
 ```toml
-theme = "luxthe"
+theme = "LuxTHE"
 defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
 
@@ -100,3 +100,66 @@ Luxthe generates subpath-safe URLs for these files. Local files under the site's
 ## Overrides and integrations
 
 Site files override theme files at the same path. Use `assets/scss/custom.scss` for CSS and the `head/custom.html` or `footer/custom.html` partials for additional markup. To add comments or analytics, override the matching `extensions/*.html` partial and enable its parameter. Audit privacy, consent and CSP requirements yourself; Luxthe deliberately ships no provider adapters.
+
+## 头像（v3.6.0+）
+
+```toml
+[params.sidebar]
+avatar = ""              # 空值 = 使用主题内置默认头像 assets/img/avatar.png
+# avatar = "none"        # 完全关闭头像（不渲染、不发布资源）
+# avatar = "img/me.png"  # 使用站点 assets/img/me.png（同路径资源自动覆盖主题默认）
+```
+
+- 远程 URL（`https://...`）会在**构建期**发起网络请求，请注意 CI/离线构建环境。
+- 推荐正方形、至少 240×240，重要内容不要贴边（圆形裁切）。
+
+## 分类预设（v3.6.2+）
+
+四个预设分类位于 `exampleSite/content/<lang>/categories/*/_index.md`，
+`title` 控制名称，`weight` 控制侧栏顺序（小者在前）。
+
+```toml
+[params.sidebar.categories]
+showEmptyPresets = true   # true: 无文章的预设分类也显示在侧栏; 默认 false
+```
+
+多语言站点请把分类分支页放进各自语言的 contentDir。
+
+## 挂件（v3.7.0 起为配置驱动）
+
+`params.widgets.homepage` / `params.widgets.page` 数组**完全决定**渲染结果：
+
+- 空数组 = 无挂件侧栏（也不保留空白列）
+- `search` 仅在搜索页 + JSON 输出存在时渲染
+- `toc` 仅在文章有有效目录时渲染
+- 同类型只渲染一次；`params.limit` 控制条目数
+- search / 404 特殊页永远无挂件侧栏
+
+```toml
+[params.widgets]
+homepage = [
+    { type = "search" },
+    { type = "categories", params = { limit = 10 } },
+    { type = "tag-cloud", params = { limit = 10 } },
+    { type = "archives", params = { limit = 5 } },
+]
+page = [
+    { type = "search" },
+    { type = "toc" },
+    { type = "categories", params = { limit = 10 } },
+    { type = "tag-cloud", params = { limit = 10 } },
+]
+```
+
+## 联系方式
+
+```toml
+[params.sidebar]
+email = "hi@example.com"   # 留空则不显示邮箱 pill
+telegram = "example_bot"   # 仅用户名，不要带 https://t.me/ 前缀
+```
+
+## 网络说明
+
+主题内置资源与本地搜索不需要外部请求；内容或配置使用远程图片时，
+Hugo 会在构建期访问对应地址。

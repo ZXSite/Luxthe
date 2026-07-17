@@ -26,9 +26,9 @@
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML -}}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+        <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} {{ T "rss.onLabel" }} {{ end }}{{ .Site.Title }}{{ end }}</title>
         <link>{{ .Permalink }}</link>
-        <description>Recent content {{ if ne .Title .Site.Title }}{{ with .Title }}in {{ . }} {{ end }}{{ end }}on {{ .Site.Title }}</description>
+        <description>{{ T "rss.recentContent" }} {{ if ne .Title .Site.Title }}{{ with .Title }}{{ T "rss.inLabel" }} {{ . }} {{ end }}{{ end }}{{ T "rss.onLabel" }} {{ .Site.Title }}</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>{{ site.Language.Locale }}</language>{{ with $authorEmail }}
         <managingEditor>{{.}}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $authorEmail }}
@@ -52,7 +52,7 @@
                 {{- end -}}
                 {{- $image := partial "helper/cover.html" . -}}
                 {{- if $image -}}
-                    {{- $imgTag := printf "<img src=\"%s\" alt=\"Featured image of post %s\" />" ($image.Permalink | absURL) .Title -}}
+                    {{- $imgTag := printf "<img src=\"%s\" alt=\"%s\" />" ($image.Permalink | absURL) (T "rss.featuredImage" (dict "Title" .Title)) -}}
                     {{- $content = printf "%s%s" $imgTag $content -}}
                 {{- end -}}
                 {{- $content | transform.XMLEscape | safeHTML -}}

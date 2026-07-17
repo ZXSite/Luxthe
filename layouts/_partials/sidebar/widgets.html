@@ -1,24 +1,17 @@
 {{- $context := .Context -}}
-{{- $searchAvailable := partialCached "helper/search-available.html" $context $context.Language.Lang -}}
-{{- $isArticle := partial "helper/is-main-content-page.html" $context -}}
+{{- $scope := default "" .Scope -}}
+{{- $widgets := partial "widget/resolve.html" (dict "Page" $context "Scope" $scope) -}}
 
+{{- with $widgets -}}
 <aside class="sidebar widget-sidebar sticky" aria-label="{{ T `sidebar.widgets` }}">
-    {{/* Search always at top on every page */}}
-    {{- if $searchAvailable -}}
-    <div class="widget-search-hextra">
-        {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
-    </div>
-    {{- end -}}
-
-    {{- if $isArticle -}}
-        {{/* Article pages: TOC first, then widgets below */}}
-        {{- partial "widget/toc" (dict "Context" $context "Params" dict) -}}
-    {{- end -}}
-
-    {{/* All pages: categories + tags */}}
-    {{- partial "widget/categories" (dict "Context" $context "Params" (dict "taxonomy" "categories")) -}}
-    {{- partial "widget/tag-cloud" (dict "Context" $context "Params" (dict "taxonomy" "tags")) -}}
-    {{- if not $isArticle -}}
-    {{- partial "widget/archives" (dict "Context" $context "Params" dict) -}}
+    {{- range . -}}
+        {{- if eq .type "search" -}}
+        <div class="widget-search">
+            {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
+        </div>
+        {{- else -}}
+        {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" .params) }}
+        {{- end -}}
     {{- end -}}
 </aside>
+{{- end -}}

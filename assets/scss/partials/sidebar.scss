@@ -74,18 +74,27 @@
 }
 
 .site-sidebar__mobile-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px 44px;
     align-items: center;
-    justify-content: space-between;
+    gap: 4px;
     width: 100%;
     min-height: 44px;
 
     .site-name {
         margin: 0;
-        padding-inline-end: 48px;
+        padding: 0;
+        min-inline-size: 0;
         color: var(--accent-color);
         font-size: 2rem;
         line-height: 1.2;
+    }
+
+    .site-name a {
+        min-inline-size: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     @include respond(md) {

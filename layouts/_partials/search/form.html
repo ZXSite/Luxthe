@@ -14,7 +14,7 @@
              data-search-status="{{ T `search.status` (dict `Count` "{count}") }}">
             <form action="{{ .RelPermalink }}" class="search-form{{ if $compact }} widget{{ end }}" role="search">
                 <p>
-                    <label for="search-{{ $instance }}-{{ $page.Language.Lang }}">{{ T "search.title" }}</label>
+                    <label class="visually-hidden" for="search-{{ $instance }}-{{ $page.Language.Lang }}">{{ T "search.title" }}</label>
                     <input id="search-{{ $instance }}-{{ $page.Language.Lang }}"
                            type="search"
                            name="keyword"

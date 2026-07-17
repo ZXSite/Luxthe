@@ -1,4 +1,10 @@
-{{ $related := (.Site.RegularPages.Related .) | first 5 }}
+{{- /* Deterministic related content: relevance-selected, stable display order.
+      Related returns relevance order but ties are nondeterministic across
+      parallel builds; a total order (Date desc, then RelPermalink) makes the
+      output reproducible. */ -}}
+{{- $related := (.Site.RegularPages.Related .) | first 5 -}}
+{{- $related = sort $related "RelPermalink" "asc" -}}
+{{- $related = sort $related "Date" "desc" -}}
 {{ with $related }}
 <aside>
     <h2 class="section-title">{{ T "article.relatedContent" }}</h2>

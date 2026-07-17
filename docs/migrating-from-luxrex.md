@@ -4,13 +4,13 @@ Luxthe v2 uses its own semantic Grid shell. A Hugo project still overrides files
 
 ## 1. Install Luxthe as a theme
 
-Extract the release so the theme metadata is located at `themes/luxthe/theme.toml`, then enable it in the site's Hugo configuration:
+Extract the release so the theme metadata is located at `themes/LuxTHE/theme.toml`, then enable it in the site's Hugo configuration:
 
 ```toml
-theme = "luxthe"
+theme = "LuxTHE"
 ```
 
-Do not leave the archive as `themes/luxthe-v2` while configuring `theme = "luxthe"`.
+Do not leave the archive as `themes/LuxTHE-v2` while configuring `theme = "LuxTHE"`.
 
 ## 2. Remove the LuxTHE module import
 
@@ -20,7 +20,7 @@ If the site uses other Hugo Modules, keep its module files and remove only the L
 
 ## 3. Remove copied LuxTHE layouts
 
-Files under the site's root `layouts/` override `themes/luxthe/layouts/`. Delete copied LuxTHE templates unless they are deliberate Luxthe v2 overrides. In particular, old `baseof.html`, sidebar partials, and search partials prevent the new semantic shell from rendering.
+Files under the site's root `layouts/` override `themes/LuxTHE/layouts/`. Delete copied LuxTHE templates unless they are deliberate Luxthe v2 overrides. In particular, old `baseof.html`, sidebar partials, and search partials prevent the new semantic shell from rendering.
 
 ## 4. Remove physical sidebar CSS
 

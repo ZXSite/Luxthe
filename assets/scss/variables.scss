@@ -19,7 +19,12 @@
 
     --section-separation: 40px;
 
+    --footer-muted-text: #606970;
+    color-scheme: light;
+
     &[data-scheme="dark"] {
+        --footer-muted-text: #b7c0c5;
+        color-scheme: dark;
         --body-background: #131b20;
         --accent-color: #76d4e8;
         --accent-color-darker: #a3e2ef;

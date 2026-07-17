@@ -1,18 +1,60 @@
-.site-sidebar__hamburger-search .search-form p {
-    margin: 0;
+:root {
+    --touch-control-size: 44px;
 }
-.site-sidebar__hamburger-search .search-form label {
-    display: none;
+
+/* Mobile search: parent <p> is the single card surface;
+   input + button are transparent and equal height (44px) */
+.site-sidebar__hamburger-search .search-form > p {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--touch-control-size);
+    min-block-size: var(--touch-control-size);
+    margin: 0;
+    overflow: clip;
+    border: 1px solid var(--card-separator-color);
+    border-radius: var(--card-border-radius);
+    background: var(--card-background);
+    box-shadow: var(--shadow-l1);
+}
+.site-sidebar__hamburger-search .search-form input,
+.site-sidebar__hamburger-search .search-form button {
+    min-block-size: var(--touch-control-size);
+    border: 0;
+    background: transparent;
+    color: var(--card-text-color-main);
+    box-shadow: none;
 }
 .site-sidebar__hamburger-search .search-form input {
-    height: 40px;
+    min-inline-size: 0;
+    height: auto;
+    padding-block: 0;
+    padding-inline: 1.4rem 0.8rem;
+    font-size: 1.6rem; /* >=16px prevents iOS focus zoom */
     line-height: 1.2;
-    padding-top: 0;
-    padding-bottom: 0;
 }
 .site-sidebar__hamburger-search .search-form button {
-    background: var(--card-background);
-    border-color: var(--card-separator-color);
+    display: grid;
+    inline-size: var(--touch-control-size);
+    place-items: center;
+    padding: 0;
+}
+.site-sidebar__hamburger-search .search-form > p:focus-within {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+/* Dark mode: surface on the parent, readable placeholder (>=4.5:1) */
+[data-scheme="dark"] .site-sidebar__hamburger-search .search-form > p {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+[data-scheme="dark"] .site-sidebar__hamburger-search .search-form input {
+    color: rgba(255, 255, 255, 0.9);
+}
+[data-scheme="dark"] .site-sidebar__hamburger-search .search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+    opacity: 1;
+}
+[data-scheme="dark"] .site-sidebar__hamburger-search .search-form button {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .site-sidebar__hamburger-search {

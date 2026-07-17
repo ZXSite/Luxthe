@@ -1,19 +1,19 @@
 {{ define "main" }}
     <header>
-        <h3 class="section-title">
+        <p class="section-title">
             {{ if eq .Parent (.GetPage "/") }}
                 {{ T "list.section" }}
             {{ else }}
                 {{ .Parent.Title }}
             {{ end }}
-        </h3>
+        </p>
 
         <div class="section-card">
             <div class="section-details">
-                <h3 class="section-count">{{ T "list.page" (len .Pages) }}</h3>
                 <h1 class="section-term">{{ .Title }}</h1>
+                <p class="section-count">{{ T "list.page" (len .Pages) }}</p>
                 {{ with .Params.description }}
-                    <h2 class="section-description">{{ . }}</h2>
+                    <p class="section-description">{{ . }}</p>
                 {{ end }}
             </div>
     

@@ -20,7 +20,7 @@
             class="page-link {{ if not $pag.Prev }}disabled{{ end }}"
             {{- if $pag.Prev -}}
                 href="{{ $pag.Prev.URL }}"
-                aria-label="Previous page"
+                aria-label="{{ T `pagination.previous` }}"
             {{- end -}}
             {{- if not $pag.Prev -}}aria-disabled="true"{{- end -}}>
             {{ partial "helper/icon" "chevron-left" }}
@@ -51,7 +51,7 @@
         {{- /* First page */ -}}
         <a
             class="page-link {{ if eq $curr 1 }}current{{ end }}"
-            aria-label="Page 1"
+            aria-label="{{ T `pagination.page` (dict `Number` 1) }}"
             {{- if eq $curr 1 -}}aria-current="page"{{- end -}}
             {{- if ne $curr 1 -}}href="{{ $pag.First.URL }}"{{- end -}}>
             1
@@ -77,7 +77,7 @@
                     class="page-link {{ if eq .PageNumber $curr }}current{{ end }} {{ if $hideOnMobile }}hide-on-mobile{{ end }}"
                     {{- if eq .PageNumber $curr -}}aria-current="page"{{- end -}}
                     href="{{ .URL }}"
-                    aria-label="Page {{ .PageNumber }}">
+                    aria-label="{{ T `pagination.page` (dict `Number` .PageNumber) }}">
                     {{ .PageNumber }}
                 </a>
             {{- end -}}
@@ -99,7 +99,7 @@
         <a
             class="page-link {{ if eq $curr $total }}current{{ end }}"
             {{- if ne $curr $total -}}href="{{ $pag.Last.URL }}"{{- end -}}
-            aria-label="Page {{ $total }}"
+            aria-label="{{ T `pagination.page` (dict `Number` $total) }}"
             {{- if eq $curr $total -}}aria-current="page"{{- end -}}>
             {{ $total }}
         </a>
@@ -109,7 +109,7 @@
             class="page-link {{ if not $pag.Next }}disabled{{ end }}"
             {{- if $pag.Next -}}
                 href="{{ $pag.Next.URL }}"
-                aria-label="Next page"
+                aria-label="{{ T `pagination.next` }}"
             {{- end -}}
             {{- if not $pag.Next -}}aria-disabled="true"{{- end -}}>
             {{ partial "helper/icon" "chevron-right" }}
