@@ -2,6 +2,15 @@
   const colorKey = 'LuxtheColorScheme';
   const menuButton = document.getElementById('toggle-menu');
   const mainMenu = document.getElementById('main-menu');
+  // Sync mobile dark mode toggle with desktop toggle
+  (() => {
+    const mobileBtn = document.getElementById('dark-mode-toggle-mobile');
+    const desktopBtn = document.getElementById('dark-mode-toggle');
+    if (mobileBtn && desktopBtn) {
+      mobileBtn.addEventListener('click', () => desktopBtn.click());
+    }
+  })();
+
   const colorButton = document.getElementById('dark-mode-toggle');
   const backToTop = document.getElementById('back-to-top');
 

@@ -5,7 +5,7 @@
         {{ if and $since (ne $since (int (now.Format "2006"))) }}
             {{ $since }} - 
         {{ end }}
-        &copy; {{ now.Format "2006" }} {{ .Site.Title }}
+        &copy; {{ now.Format "2006" }} <a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
     </section>
     {{ with $copyright }}
     <section class="powerby">

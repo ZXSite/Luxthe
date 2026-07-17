@@ -1,21 +1,9 @@
 {{ define "body-class" }}template-archives{{ end }}
+{{ define "widget-sidebar" }}
+    {{ partial "sidebar/widgets.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}
 {{ define "main" }}
     <h1 class="visually-hidden">{{ .Title }}</h1>
-    <header>
-        {{- $taxonomy := $.Site.GetPage "taxonomyTerm" "categories" -}}
-        {{- $terms := $taxonomy.Pages -}}
-        {{ if $terms }}
-        <h2 class="section-title">{{ T "widget.categoriesCloud.title" }}</h2>
-        <div class="subsection-list">
-            <div class="article-list--tile">
-                {{ range $terms.ByWeight }}
-                    {{ partial "article-list/tile" . }}
-                {{ end }}
-            </div>
-        </div>
-        {{ end }}
-    </header>
-
     {{ $pages := partial "helper/pages.html" .Site.Home }}
 
     {{ range $pages.GroupByDate "2006" }}

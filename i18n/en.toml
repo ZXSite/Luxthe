@@ -82,3 +82,7 @@ page = "Page {{ .Number }}"
 jumpToPage = "Jump to page"
 jump = "Go"
 pressEnter = "Press Enter to jump"
+
+[contact]
+email = "Email"
+telegram = "Telegram"
