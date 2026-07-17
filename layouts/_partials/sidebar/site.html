@@ -1,7 +1,14 @@
 <aside class="sidebar site-sidebar sticky{{ if .Site.Params.sidebar.compact }} compact{{ end }}" aria-label="{{ T `sidebar.siteNavigation` }}">
     {{/* Mobile header: logo + dark toggle + hamburger */}}
     <div class="site-sidebar__mobile-header">
-        <div class="site-name"><a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a></div>
+        <div class="site-name">
+            {{- with .Site.Params.sidebar.avatar -}}
+                {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
+                {{- if $avatar.Permalink -}}
+                <img src="{{ $avatar.Permalink }}" width="28" height="28" class="site-logo--mobile" loading="lazy" alt="{{ $.Site.Title }}">
+                {{- end -}}
+            {{- end -}}
+            <a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a></div>
         {{ if .Site.Params.colorScheme.toggle }}
         <button type="button" id="dark-mode-toggle-mobile" aria-label="{{ T `darkMode` }}" aria-pressed="false" class="mobile-toggle-btn">
             {{ partial "helper/icon" "toggle-left" }}
@@ -17,6 +24,24 @@
 
     {{/* Desktop identity */}}
     <header class="site-sidebar__identity">
+        {{ with .Site.Params.sidebar.avatar }}
+            {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
+            {{ if $avatar.Permalink }}
+            <figure class="site-avatar">
+                <a href="{{ $.Site.Home.RelPermalink }}">
+                    <img src="{{ $avatar.Permalink }}"
+                        width="{{ $avatar.Width }}"
+                        height="{{ $avatar.Height }}"
+                        class="site-logo"
+                        loading="lazy"
+                        alt="{{ $.Site.Title }}">
+                </a>
+                {{ with $.Site.Params.sidebar.emoji }}
+                    <span class="emoji">{{ . }}</span>
+                {{ end }}
+            </figure>
+            {{ end }}
+        {{ end }}
         <div class="site-meta">
             <div class="site-name"><a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a></div>
         </div>

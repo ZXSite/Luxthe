@@ -247,3 +247,22 @@
     padding-bottom: 12px !important;
     height: 44px !important;
 }
+
+/* Mobile mini avatar in header */
+.site-sidebar__mobile-header .site-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.site-logo--mobile {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-l1);
+}
+/* Desktop avatar centered above site name */
+.site-sidebar__identity {
+    align-items: center;
+}
