@@ -23,6 +23,10 @@
                     });
                     documents.forEach((document) => index.add(document));
                     return index;
+                })
+                .catch((error) => {
+                    indexes.delete(url);
+                    throw error;
                 }));
         }
         return indexes.get(url);
