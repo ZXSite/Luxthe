@@ -1,8 +1,9 @@
 <aside class="sidebar site-sidebar sticky{{ if .Site.Params.sidebar.compact }} compact{{ end }}" aria-label="{{ T `sidebar.siteNavigation` }}">
+    {{/* Mobile header: logo + dark toggle + hamburger */}}
     <div class="site-sidebar__mobile-header">
         <div class="site-name"><a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a></div>
         {{ if .Site.Params.colorScheme.toggle }}
-        <button type="button" id="dark-mode-toggle-mobile" aria-label="{{ T `darkMode` }}" aria-pressed="false">
+        <button type="button" id="dark-mode-toggle-mobile" aria-label="{{ T `darkMode` }}" aria-pressed="false" class="mobile-toggle-btn">
             {{ partial "helper/icon" "toggle-left" }}
             {{ partial "helper/icon" "toggle-right" }}
         </button>
@@ -14,45 +15,67 @@
         </button>
     </div>
 
+    {{/* Desktop identity */}}
     <header class="site-sidebar__identity">
-        {{ with .Site.Params.sidebar.avatar }}
-            {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
-            <figure class="site-avatar">
-                <a href="{{ $.Site.Home.RelPermalink }}">
-                    <img src="{{ $avatar.Permalink }}"
-                        width="{{ $avatar.Width }}"
-                        height="{{ $avatar.Height }}"
-                        class="site-logo"
-                        loading="lazy"
-                        alt="{{ $.Site.Title }}">
-                </a>
-                {{ with $.Site.Params.sidebar.emoji }}
-                    <span class="emoji">{{ . }}</span>
-                {{ end }}
-            </figure>
-        {{ end }}
-
         <div class="site-meta">
             <div class="site-name"><a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a></div>
-            {{ with .Site.Params.sidebar.subtitle }}
-                <h2 class="site-description">{{ . }}</h2>
-            {{ end }}
         </div>
     </header>
 
+    {{/* Introduction card */}}
+    {{ with .Site.Params.sidebar.introduction }}
+    <div class="site-intro-wrapper">
+        <p class="site-introduction">{{ . }}</p>
+    </div>
+    {{ end }}
+
+    {{/* Contact section: pills + divider + dark toggle */}}
+    {{ if or .Site.Params.sidebar.email .Site.Params.sidebar.telegram .Site.Params.colorScheme.toggle }}
+    <div class="site-sidebar__contact-section">
+        {{ if or .Site.Params.sidebar.email .Site.Params.sidebar.telegram }}
+        <div class="site-sidebar__contact-row">
+            {{ with .Site.Params.sidebar.email }}
+            <a class="contact-pill" href="mailto:{{ . }}" title="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <span>{{ T "contact.emailPill" }}</span>
+            </a>
+            {{ end }}
+            {{ with .Site.Params.sidebar.telegram }}
+            <a class="contact-pill" href="https://t.me/{{ . }}" title="Telegram" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+                <span>{{ T "contact.telegram" }}</span>
+            </a>
+            {{ end }}
+        </div>
+        {{ end }}
+        {{ if .Site.Params.colorScheme.toggle }}
+        <hr class="site-sidebar__divider">
+        <div class="site-sidebar__toggle-wrap">
+            <button type="button" id="dark-mode-toggle" class="contact-pill" aria-label="{{ T `darkMode` }}" aria-pressed="false">
+                {{ partial "helper/icon" "toggle-left" }}
+                {{ partial "helper/icon" "toggle-right" }}
+                <span>{{ T "darkMode" }}</span>
+            </button>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    {{/* Hamburger menu content */}}
     <div class="site-sidebar__content" id="main-menu">
-        {{/* Hamburger menu: inline search form for mobile */}}
-        {{- $searchAvailable := partial "helper/search-available.html" . -}}
+        {{- $searchAvailable := partialCached "helper/search-available.html" . .Language.Lang -}}
         {{- if $searchAvailable -}}
         <div class="site-sidebar__hamburger-search">
             {{ partial "search/form.html" (dict "Page" . "Instance" "mobile" "Compact" true) }}
         </div>
         {{- end -}}
 
-        <nav class="site-sidebar__navigation" aria-label="{{ .Site.Title }}">
+        {{/* Optional main menu (renders nothing when no menu configured) */}}
+        {{ with .Site.Menus.main }}
+        <nav class="site-sidebar__navigation" aria-label="{{ $.Site.Title }}">
             <ul class="menu">
-                {{ $currentPage := . }}
-                {{ range .Site.Menus.main }}
+                {{ $currentPage := $ }}
+                {{ range . }}
                     {{ if ne .URL "/search/" }}
                     {{ $active := or (eq $currentPage.RelPermalink .URL) (or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .)) }}
                     <li class="menu-item-{{ .Identifier }}{{ if $active }} current{{ end }}">
@@ -67,61 +90,57 @@
                 {{ end }}
             </ul>
         </nav>
-
+        {{ end }}
 
         {{- $categories := .Site.Taxonomies.categories -}}
         {{- if $categories -}}
         <nav class="site-sidebar__hamburger-categories" aria-label="{{ T `sidebar.categories` }}">
             <div class="site-sidebar__hamburger-categories__list">
-                {{- $catPages := slice -}}
                 {{- range $name, $_ := $categories -}}
                     {{- with $.Site.GetPage (printf "/categories/%s" $name) -}}
-                        {{- $catPages = $catPages | append . -}}
+                        <a class="site-sidebar__hamburger-categories__pill" href="{{ .RelPermalink }}">{{ .Title }}</a>
                     {{- end -}}
-                {{- end -}}
-                {{- range $catPages.ByWeight -}}
-                    <a class="site-sidebar__hamburger-categories__pill" href="{{ .RelPermalink }}">{{ .Title }}</a>
                 {{- end -}}
             </div>
         </nav>
         {{- end -}}
 
+        {{/* Mobile-only contact links inside hamburger */}}
         {{ if or .Site.Params.sidebar.email .Site.Params.sidebar.telegram }}
         <div class="site-sidebar__hamburger-contact">
             {{ with .Site.Params.sidebar.email }}
             <a class="hamburger-contact-link" href="mailto:{{ . }}">
-                {{ partial "helper/icon" "mail" }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 <span>{{ T "contact.email" }}</span>
             </a>
             {{ end }}
             {{ with .Site.Params.sidebar.telegram }}
             <a class="hamburger-contact-link" href="https://t.me/{{ . }}" target="_blank" rel="noopener noreferrer">
-                {{ partial "helper/icon" "send" }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
                 <span>{{ T "contact.telegram" }}</span>
             </a>
             {{ end }}
         </div>
         {{ end }}
 
+        {{ if hugo.IsMultilingual }}
         <div class="site-sidebar__utilities">
-            {{ if hugo.IsMultilingual }}
-                <div class="site-sidebar__language">
-                    {{ partial "helper/icon" "language" }}
-                    {{- $currentLanguageCode := .Language.Name -}}
-                    <select name="language" aria-label="{{ T `language` }}" data-language-switch>
-                        {{ range .Site.Home.AllTranslations }}
-                            {{ $target := . }}
-                            {{ range $.AllTranslations }}
-                                {{ if eq .Language.Name $target.Language.Name }}
-                                    {{ $target = . }}
-                                {{ end }}
+            <div class="site-sidebar__language">
+                {{ partial "helper/icon" "language" }}
+                {{- $currentLanguageCode := .Language.Name -}}
+                <select name="language" aria-label="{{ T `language` }}" data-language-switch>
+                    {{ range .Site.Home.AllTranslations }}
+                        {{ $target := . }}
+                        {{ range $.AllTranslations }}
+                            {{ if eq .Language.Name $target.Language.Name }}
+                                {{ $target = . }}
                             {{ end }}
-                            <option value="{{ $target.RelPermalink }}" {{ if eq $target.Language.Name $currentLanguageCode }}selected{{ end }}>{{ .Language.Label }}</option>
                         {{ end }}
-                    </select>
-                </div>
-            {{ end }}
-
+                        <option value="{{ $target.RelPermalink }}" {{ if eq $target.Language.Name $currentLanguageCode }}selected{{ end }}>{{ .Language.Label }}</option>
+                    {{ end }}
+                </select>
+            </div>
         </div>
+        {{ end }}
     </div>
 </aside>

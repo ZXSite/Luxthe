@@ -84,5 +84,6 @@ jump = "跳转"
 pressEnter = "按 Enter 键跳转"
 
 [contact]
+emailPill = "邮箱"
 email = "邮件"
 telegram = "飞机"

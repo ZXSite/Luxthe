@@ -141,32 +141,3 @@
         }
     }
 }
-
-/* Compact search: hide label on non-floating forms */
-.search-form label {
-    display: none;
-}
-.search-form p {
-    margin: 0;
-}
-
-/* Desktop widget search: compact like mobile */
-.widget-search-hextra .search-form input {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    height: 44px;
-}
-
-/* Dark mode: lighten search bar */
-[data-scheme="dark"] .search-form input {
-    background: rgba(255,255,255,0.10);
-    border-color: rgba(255,255,255,0.30);
-    color: rgba(255,255,255,0.90);
-}
-[data-scheme="dark"] .search-form input::placeholder {
-    color: rgba(255,255,255,0.45);
-}
-[data-scheme="dark"] .search-form button {
-    background: transparent;
-    color: rgba(255,255,255,0.60);
-}

@@ -1,28 +1,24 @@
-{{- $scope := default "homepage" .Scope -}}
 {{- $context := .Context -}}
-{{- $widgets := default (slice) (index $context.Site.Params.widgets $scope) -}}
-{{- $isArticleScope := and (eq $scope "page") (partial "helper/is-main-content-page.html" $context) -}}
-{{- $searchAvailable := partial "helper/search-available.html" $context -}}
+{{- $searchAvailable := partialCached "helper/search-available.html" $context $context.Language.Lang -}}
+{{- $isArticle := partial "helper/is-main-content-page.html" $context -}}
 
-{{- if partial "helper/has-widget.html" $context -}}
-    <aside class="sidebar widget-sidebar sticky" aria-label="{{ T `sidebar.widgets` }}">
-        {{/* Search at top of widgets (desktop only) */}}
-        {{- if and $searchAvailable (not $isArticleScope) -}}
-        <div class="widget-search-hextra">
-            {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
-        </div>
-        {{- end -}}
+<aside class="sidebar widget-sidebar sticky" aria-label="{{ T `sidebar.widgets` }}">
+    {{/* Search always at top on every page */}}
+    {{- if $searchAvailable -}}
+    <div class="widget-search-hextra">
+        {{ partial "search/form.html" (dict "Page" $context "Compact" false) }}
+    </div>
+    {{- end -}}
 
-        {{- range $widgets -}}
-            {{- if ne .type "search" -}}
-            {{- $partialPath := printf "_partials/widget/%s.html" .type -}}
-            {{- if templates.Exists $partialPath -}}
-                {{- $params := default dict .params -}}
-                {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
-            {{- else -}}
-                {{ warnf "Widget %s not found" .type }}
-            {{- end -}}
-            {{- end -}}
-        {{- end -}}
-    </aside>
-{{- end -}}
+    {{- if $isArticle -}}
+        {{/* Article pages: TOC first, then widgets below */}}
+        {{- partial "widget/toc" (dict "Context" $context "Params" dict) -}}
+    {{- end -}}
+
+    {{/* All pages: categories + tags */}}
+    {{- partial "widget/categories" (dict "Context" $context "Params" (dict "taxonomy" "categories")) -}}
+    {{- partial "widget/tag-cloud" (dict "Context" $context "Params" (dict "taxonomy" "tags")) -}}
+    {{- if not $isArticle -}}
+    {{- partial "widget/archives" (dict "Context" $context "Params" dict) -}}
+    {{- end -}}
+</aside>

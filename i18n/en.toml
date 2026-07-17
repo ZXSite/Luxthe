@@ -84,5 +84,6 @@ jump = "Go"
 pressEnter = "Press Enter to jump"
 
 [contact]
+emailPill = "Email"
 email = "Email"
 telegram = "Telegram"

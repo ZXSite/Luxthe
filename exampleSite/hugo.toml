@@ -30,6 +30,9 @@ hasCJKLanguage = true
     [params.sidebar]
         avatar = ""
         subtitle = "A modern Hugo theme"
+        introduction = "在这里写一段站点简介，会以卡片形式显示在左侧栏。"
+        email = "hi@example.com"
+        telegram = "example_bot"
     [params.article]
         readingTime = true
     [params.widgets]
