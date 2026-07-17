@@ -23,8 +23,12 @@
 {{- end -}}
 
 {{- if not $hasStructuredIcons -}}
-    {{- $favicon := partial "helper/image" (dict "Image" .Site.Params.favicon "Resources" resources "Context" .) -}}
-    {{- with $favicon -}}
-        <link rel="icon" href="{{ .Permalink }}">
+    {{- /* favicon: empty/unset = theme default, "none" = disabled, or custom path */ -}}
+    {{- $faviconPath := default "img/favicon.svg" .Site.Params.favicon -}}
+    {{- if ne $faviconPath "none" -}}
+        {{- $favicon := partial "helper/image" (dict "Image" $faviconPath "Resources" resources "Context" .) -}}
+        {{- with $favicon.Permalink -}}
+            <link rel="icon" href="{{ . }}">
+        {{- end -}}
     {{- end -}}
 {{- end -}}
