@@ -68,29 +68,6 @@
             </ul>
         </nav>
 
-        {{ if or .Site.Params.sidebar.introduction .Site.Menus.social }}
-            <section class="site-sidebar__profile">
-                {{ with .Site.Params.sidebar.introduction }}
-                    <p class="site-introduction">{{ . }}</p>
-                {{ end }}
-
-                {{ with .Site.Menus.social }}
-                    <ul class="menu-social">
-                        {{ range . }}
-                            <li>
-                                <a class="site-sidebar__contact-link"
-                                   href="{{ .URL }}"
-                                   aria-label="{{ .Name }}"
-                                   title="{{ .Name }}"
-                                   {{ if .Params.newTab }}target="_blank" rel="me noopener noreferrer"{{ else }}rel="me"{{ end }}>
-                                    {{ partial "helper/icon" (default "link" .Params.Icon) }}
-                                </a>
-                            </li>
-                        {{ end }}
-                    </ul>
-                {{ end }}
-            </section>
-        {{ end }}
 
         {{- $categories := .Site.Taxonomies.categories -}}
         {{- if $categories -}}
@@ -145,13 +122,6 @@
                 </div>
             {{ end }}
 
-            {{ if .Site.Params.colorScheme.toggle }}
-                <button type="button" id="dark-mode-toggle" aria-label="{{ T `darkMode` }}" aria-pressed="false">
-                    {{ partial "helper/icon" "toggle-left" }}
-                    {{ partial "helper/icon" "toggle-right" }}
-                    <span>{{ T "darkMode" }}</span>
-                </button>
-            {{ end }}
         </div>
     </div>
 </aside>
