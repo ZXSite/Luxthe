@@ -28,7 +28,7 @@
     {{- if ne $faviconPath "none" -}}
         {{- $favicon := partial "helper/image" (dict "Image" $faviconPath "Resources" resources "Context" .) -}}
         {{- with $favicon.Permalink -}}
-            <link rel="icon" href="{{ . }}">
+            <link rel="icon" type="image/svg+xml" sizes="any" href="{{ . }}">
         {{- end -}}
     {{- end -}}
 {{- end -}}

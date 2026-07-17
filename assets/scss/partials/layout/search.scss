@@ -73,7 +73,6 @@
             outline: 3px solid var(--accent-color);
             outline-offset: 3px;
         }
-        }
 
         svg {
             color: var(--card-text-color-secondary);
@@ -83,6 +82,7 @@
             height: 20px;
         }
     }
+}
 
 
 .search-component {
@@ -145,4 +145,10 @@
             filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .12));
         }
     }
+}
+
+/* Mobile search: parent focus-within provides the ring; suppress child outline */
+.site-sidebar__hamburger-search .search-form input:focus-visible,
+.site-sidebar__hamburger-search .search-form button:focus-visible {
+    outline: 0;
 }

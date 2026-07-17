@@ -191,7 +191,8 @@
 
 .site-sidebar__profile,
 .site-sidebar__language {
-    display: none;
+    display: inline-flex;
+    min-block-size: 44px;
 }
 
 .site-introduction {
@@ -219,9 +220,6 @@
         display: block;
     }
 
-    .site-sidebar__language {
-        display: inline-flex;
-    }
 
     .site-sidebar__navigation,
     .site-sidebar__profile,

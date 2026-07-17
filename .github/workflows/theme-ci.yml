@@ -131,8 +131,9 @@ jobs:
             --config hugo.toml,"$RUNNER_TEMP/presets/empty-widgets.toml" \
             --destination "$RUNNER_TEMP/presets/empty" \
             --gc --minify --panicOnWarning
-          test "$(grep -c 'widget-sidebar' "$RUNNER_TEMP/presets/empty/index.html" || echo 0)" -eq 0 \
-            || { echo "FAIL: empty widgets gave aside"; exit 1; }
+          if grep -q 'widget-sidebar' "$RUNNER_TEMP/presets/empty/index.html"; then
+            echo "FAIL: empty widgets gave aside"; exit 1;
+          fi
 
           # avatar=none
           cat > "$RUNNER_TEMP/presets/avatar-none.toml" <<'CFG'
@@ -143,8 +144,9 @@ jobs:
             --config hugo.toml,"$RUNNER_TEMP/presets/avatar-none.toml" \
             --destination "$RUNNER_TEMP/presets/avatar-none" \
             --gc --minify --panicOnWarning
-          test "$(grep -c 'site-avatar' "$RUNNER_TEMP/presets/avatar-none/index.html" || echo 0)" -eq 0 \
-            || { echo "FAIL: avatar not disabled"; exit 1; }
+          if grep -Eq 'site-avatar|site-logo--mobile' "$RUNNER_TEMP/presets/avatar-none/index.html"; then
+            echo "FAIL: avatar not disabled"; exit 1;
+          fi
 
           # showEmptyPresets
           cat > "$RUNNER_TEMP/presets/show-all.toml" <<'CFG'
@@ -156,6 +158,17 @@ jobs:
             --destination "$RUNNER_TEMP/presets/show-all" \
             --gc --minify --panicOnWarning
           grep -q '生活' "$RUNNER_TEMP/presets/show-all/index.html" || { echo "FAIL: empty presets not shown"; exit 1; }
+
+          # showEmptyPresets=false: empty categories hidden
+          cat > "$RUNNER_TEMP/presets/hide-empty.toml" <<'CFG'
+          [params.sidebar.categories]
+          showEmptyPresets = false
+          CFG
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE             --config hugo.toml,"$RUNNER_TEMP/presets/hide-empty.toml"             --destination "$RUNNER_TEMP/presets/hide-empty"             --gc --minify --panicOnWarning
+          if grep -q '生活' "$RUNNER_TEMP/presets/hide-empty/index.html"; then
+            echo "FAIL: empty presets visible when showEmptyPresets=false"
+            exit 1
+          fi
           echo "Preset matrix OK"
 
       - name: "Deterministic build check (5x)"
