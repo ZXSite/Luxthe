@@ -15,6 +15,7 @@ hasCJKLanguage = true
   label = "English"
   title = "LuxTHE Demo"
   weight = 2
+  contentDir = "content/en"
 
 [pagination]
     pagerSize = 8
