@@ -1,17 +1,39 @@
 {{ define "main" }}
     <header>
         <p class="section-title">
-            {{ if eq .Parent (.GetPage "/") }}
+            {{- if eq .Kind "taxonomy" -}}
+                {{- if eq .Type "tags" -}}
+                    {{ T "widget.tagCloud.title" }}
+                {{- else if eq .Type "categories" -}}
+                    {{ T "widget.categoriesCloud.title" }}
+                {{- else -}}
+                    {{ T "list.section" }}
+                {{- end -}}
+            {{- else if eq .Kind "term" -}}
+                {{- with .Parent -}}{{- .Title -}}{{- end -}}
+            {{- else if eq .Parent (.GetPage "/") -}}
                 {{ T "list.section" }}
-            {{ else }}
+            {{- else -}}
                 {{ .Parent.Title }}
-            {{ end }}
+            {{- end -}}
         </p>
 
         <div class="section-card">
             <div class="section-details">
                 <h1 class="section-term">{{ .Title }}</h1>
-                <p class="section-count">{{ T "list.page" (len .Pages) }}</p>
+                <p class="section-count">
+                    {{- if eq .Kind "taxonomy" -}}
+                        {{- if eq .Type "tags" -}}
+                            {{ len .Pages }} 个标签
+                        {{- else if eq .Type "categories" -}}
+                            {{ len .Pages }} 个分类
+                        {{- else -}}
+                            {{ T "list.page" (len .Pages) }}
+                        {{- end -}}
+                    {{- else -}}
+                        {{ T "list.page" (len .Pages) }}
+                    {{- end -}}
+                </p>
                 {{ with .Params.description }}
                     <p class="section-description">{{ . }}</p>
                 {{ end }}
