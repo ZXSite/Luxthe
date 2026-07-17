@@ -1,7 +1,7 @@
 +++
 title = "Welcome to LuxTHE"
 date = 2026-01-01T00:00:00+08:00
-categories = ["技术"]
+categories = ["学习"]
 tags = ["Hugo", "Theme"]
 description = "A modern, Chinese-friendly card-style Hugo theme."
 +++
