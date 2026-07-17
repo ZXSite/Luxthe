@@ -1,8 +1,11 @@
 <aside class="sidebar site-sidebar sticky{{ if .Site.Params.sidebar.compact }} compact{{ end }}" aria-label="{{ T `sidebar.siteNavigation` }}">
+    {{/* Avatar: empty/unset = theme default, "none" = disabled, or custom path */}}
+    {{- $avatarPath := default "img/avatar.png" .Site.Params.sidebar.avatar -}}
+    {{- if eq $avatarPath "none" }}{{ $avatarPath = "" }}{{ end -}}
     {{/* Mobile header: logo + dark toggle + hamburger */}}
     <div class="site-sidebar__mobile-header">
         <div class="site-name">
-            {{- with .Site.Params.sidebar.avatar -}}
+            {{- with $avatarPath -}}
                 {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
                 {{- if $avatar.Permalink -}}
                 <img src="{{ $avatar.Permalink }}" width="28" height="28" class="site-logo--mobile" loading="lazy" alt="{{ $.Site.Title }}">
@@ -24,7 +27,7 @@
 
     {{/* Desktop identity */}}
     <header class="site-sidebar__identity">
-        {{ with .Site.Params.sidebar.avatar }}
+        {{ with $avatarPath }}
             {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
             {{ if $avatar.Permalink }}
             <figure class="site-avatar">
