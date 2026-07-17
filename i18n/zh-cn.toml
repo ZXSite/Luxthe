@@ -87,3 +87,7 @@ pressEnter = "按 Enter 键跳转"
 emailPill = "邮箱"
 email = "邮件"
 telegram = "飞机"
+
+[video]
+unsupported = "你的浏览器不支持 HTML5 视频。"
+fallbackLink = "打开视频文件"

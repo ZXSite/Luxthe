@@ -116,29 +116,45 @@ jobs:
 
 
       - name: "Preset regression matrix"
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p "$RUNNER_TEMP/presets"
+
           # empty widgets
-          cat > "$RUNNER_TEMP/presets/empty-widgets.toml" << 'CFG'
-[params.widgets]
-homepage = []
-page = []
-CFG
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE             --config hugo.toml,"$RUNNER_TEMP/presets/empty-widgets.toml"             --destination "$RUNNER_TEMP/presets/empty" --gc --minify --panicOnWarning
-          test ! -e "$RUNNER_TEMP/presets/empty/index.html" -o             "$(grep -c 'widget-sidebar' "$RUNNER_TEMP/presets/empty/index.html" || echo 0)" -eq 0             || { echo "FAIL: empty widgets"; exit 1; }
+          cat > "$RUNNER_TEMP/presets/empty-widgets.toml" <<'CFG'
+          [params.widgets]
+          homepage = []
+          page = []
+          CFG
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE \
+            --config hugo.toml,"$RUNNER_TEMP/presets/empty-widgets.toml" \
+            --destination "$RUNNER_TEMP/presets/empty" \
+            --gc --minify --panicOnWarning
+          test "$(grep -c 'widget-sidebar' "$RUNNER_TEMP/presets/empty/index.html" || echo 0)" -eq 0 \
+            || { echo "FAIL: empty widgets gave aside"; exit 1; }
+
           # avatar=none
-          cat > "$RUNNER_TEMP/presets/avatar-none.toml" << 'CFG'
-[params.sidebar]
-avatar = "none"
-CFG
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE             --config hugo.toml,"$RUNNER_TEMP/presets/avatar-none.toml"             --destination "$RUNNER_TEMP/presets/avatar-none" --gc --minify --panicOnWarning
-          test "$(grep -c 'site-avatar' "$RUNNER_TEMP/presets/avatar-none/index.html" || echo 0)" -eq 0             || { echo "FAIL: avatar not disabled"; exit 1; }
+          cat > "$RUNNER_TEMP/presets/avatar-none.toml" <<'CFG'
+          [params.sidebar]
+          avatar = "none"
+          CFG
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE \
+            --config hugo.toml,"$RUNNER_TEMP/presets/avatar-none.toml" \
+            --destination "$RUNNER_TEMP/presets/avatar-none" \
+            --gc --minify --panicOnWarning
+          test "$(grep -c 'site-avatar' "$RUNNER_TEMP/presets/avatar-none/index.html" || echo 0)" -eq 0 \
+            || { echo "FAIL: avatar not disabled"; exit 1; }
+
           # showEmptyPresets
-          cat > "$RUNNER_TEMP/presets/show-all.toml" << 'CFG'
-[params.sidebar.categories]
-showEmptyPresets = true
-CFG
-          hugo --source exampleSite --themesDir ../.. --theme LuxTHE             --config hugo.toml,"$RUNNER_TEMP/presets/show-all.toml"             --destination "$RUNNER_TEMP/presets/show-all" --gc --minify --panicOnWarning
+          cat > "$RUNNER_TEMP/presets/show-all.toml" <<'CFG'
+          [params.sidebar.categories]
+          showEmptyPresets = true
+          CFG
+          hugo --source exampleSite --themesDir ../.. --theme LuxTHE \
+            --config hugo.toml,"$RUNNER_TEMP/presets/show-all.toml" \
+            --destination "$RUNNER_TEMP/presets/show-all" \
+            --gc --minify --panicOnWarning
           grep -q '生活' "$RUNNER_TEMP/presets/show-all/index.html" || { echo "FAIL: empty presets not shown"; exit 1; }
           echo "Preset matrix OK"
 

@@ -2,11 +2,12 @@
   const key = 'LuxtheColorScheme';
   const fallback = {{ .Site.Params.colorScheme.default | default "auto" | jsonify | safeJS }};
   const toggleEnabled = {{ .Site.Params.colorScheme.toggle | default false }};
-  let preference = localStorage.getItem(key);
+  let preference = null;
+try { preference = localStorage.getItem(key); } catch {}
 
   if (!toggleEnabled) {
     preference = fallback;
-    localStorage.setItem(key, preference);
+    try { localStorage.setItem(key, preference); } catch {}
   } else if (!preference) {
     preference = fallback;
   }

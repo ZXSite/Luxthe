@@ -43,8 +43,11 @@
         font-size: 1.8rem;
 
         &:focus {
-            outline: 0;
             box-shadow: var(--shadow-l2);
+        }
+        &:focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
         }
     }
 
@@ -61,12 +64,15 @@
         padding: 0 10px;
 
         &:focus {
-            outline: 0;
-
             svg {
                 stroke-width: 2;
                 color: var(--accent-color);
             }
+        }
+        &:focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
+        }
         }
 
         svg {
@@ -78,7 +84,6 @@
         }
     }
 
-}
 
 .search-component {
     position: relative;

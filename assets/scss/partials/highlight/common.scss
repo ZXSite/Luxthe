@@ -1,10 +1,10 @@
+// Line highlight overrides (set in light.scss/dark.scss)
+$highlight-background: $background-color !default;
+
 /* Background */
 .chroma {
     color: $color;
     background-color: $background-color;
-
-// Line highlight overrides (set in light.scss/dark.scss)
-$highlight-background: $background-color !default;
 }
 
 /* Other */
@@ -50,9 +50,7 @@ $highlight-background: $background-color !default;
 .chroma .hl {
     display: block;
     width: 100%;
-    background-color: $background-color;
-
-// Line highlight overrides (set in light.scss/dark.scss)
+    background-color: $highlight-background;
 }
 
 /* LineNumbersTable */

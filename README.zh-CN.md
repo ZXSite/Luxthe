@@ -44,7 +44,7 @@ content/posts/my-post/
 
 ## 搜索与双语
 
-每种语言创建一个搜索页，设置 `layout = "search"` 和 `outputs = ["HTML", "JSON"]`，可直接参考 `exampleSite/content/search`。索引仅包含 `params.mainSections`，搜索完全在浏览器本地运行，支持方向键、Enter、Escape 和 Ctrl/Cmd+K。
+每种语言创建一个搜索页，设置 `layout = "search"` 和 `outputs = ["HTML", "JSON"]`，可直接参考 `exampleSite/content/zh-cn/search`。索引仅包含 `params.mainSections`，搜索完全在浏览器本地运行，支持方向键、Enter、Escape 和 Ctrl/Cmd+K。
 
 主题只交付 `zh-cn` 与 `en` 两套完整翻译，配置方法见演示站 `[languages]`。
 

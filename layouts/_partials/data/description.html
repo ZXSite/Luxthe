@@ -9,8 +9,7 @@
 {{ if .Description }}
     <!-- Page description exists -->
     {{ $description = .Description }}
-{{ else if .IsPage }}
-    <!-- Use page summary -->
+{{ else if and .IsPage (ne .Layout "search") (ne .Kind "404") }}
     {{ $description = .Summary }}
 {{ end }}
 

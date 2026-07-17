@@ -87,3 +87,7 @@ pressEnter = "Press Enter to jump"
 emailPill = "Email"
 email = "Email"
 telegram = "Telegram"
+
+[video]
+unsupported = "Your browser does not support HTML5 video."
+fallbackLink = "Open video file"

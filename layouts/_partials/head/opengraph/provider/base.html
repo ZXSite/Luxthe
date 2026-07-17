@@ -6,7 +6,7 @@
 <meta property='og:url' content='{{ .Permalink }}'>
 <meta property='og:site_name' content='{{ .Site.Title }}'>
 <meta property='og:type' content='
-    {{- if .IsPage -}}
+    {{- if and .IsPage (ne .Layout "search") (ne .Kind "404") (ne .Type "search") -}}
         article
     {{- else -}}
         website

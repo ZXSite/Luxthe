@@ -44,7 +44,7 @@ Use bundle-relative Markdown such as `![Diagram](images/01.webp)` and `[Download
 
 ## Search and languages
 
-Create one translated search page per language with `layout = "search"` and `outputs = ["HTML", "JSON"]`; see `exampleSite/content/search`. Search indexes only `params.mainSections`, runs entirely in the browser from local assets, and supports arrows, Enter, Escape and Ctrl/Cmd+K.
+Create one translated search page per language with `layout = "search"` and `outputs = ["HTML", "JSON"]`; see `exampleSite/content/zh-cn/search`. Search indexes only `params.mainSections`, runs entirely in the browser from local assets, and supports arrows, Enter, Escape and Ctrl/Cmd+K.
 
 The theme ships `zh-cn` and `en`. Configure both under `[languages]`, as demonstrated by the example site.
 
