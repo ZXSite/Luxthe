@@ -52,7 +52,7 @@ Article search is pinned above this configurable array in v2 and is automaticall
 
 ## 6. Add the local search page
 
-Copy the appropriate files from `exampleSite/content/zh-cn/search/` into the site's `content/search/` directory. Each enabled language needs a page with HTML and JSON outputs:
+Copy the appropriate files from `exampleSite/content/zh-cn/search.md` into the site's `content/search/` directory. Each enabled language needs a page with HTML and JSON outputs:
 
 ```toml
 +++

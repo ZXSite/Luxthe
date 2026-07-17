@@ -1,2 +1,2 @@
-{{/* DEPRECATED: no internal callers as of v3.6.8. Remove in next major if no external override depends on it. */}}
+{{/* Sentinel template: widget/resolve.html uses templates.Exists "_partials/widget/search.html" to validate the search widget type. Do not remove unless the resolver is updated at the same time. */}}
 {{ partial "search/form.html" (dict "Page" .Context "Instance" "sidebar" "Compact" true) }}
