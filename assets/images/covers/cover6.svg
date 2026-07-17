@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#3f7a00"/>
+  <rect x="0" y="0" width="1200" height="630" fill="none"/>
+  <line x1="100" y1="0" x2="100" y2="630" stroke="#a6e22e" stroke-width="1" opacity="0.08"/>
+  <line x1="200" y1="0" x2="200" y2="630" stroke="#a6e22e" stroke-width="2" opacity="0.12"/>
+  <line x1="350" y1="0" x2="350" y2="630" stroke="#a6e22e" stroke-width="1" opacity="0.06"/>
+  <line x1="500" y1="0" x2="500" y2="630" stroke="#a6e22e" stroke-width="3" opacity="0.15"/>
+  <line x1="700" y1="0" x2="700" y2="630" stroke="#a6e22e" stroke-width="1" opacity="0.08"/>
+  <line x1="850" y1="0" x2="850" y2="630" stroke="#a6e22e" stroke-width="2" opacity="0.1"/>
+  <line x1="1000" y1="0" x2="1000" y2="630" stroke="#a6e22e" stroke-width="1" opacity="0.07"/>
+  <circle cx="600" cy="315" r="80" fill="#a6e22e" opacity="0.06"/>
+  <text x="600" y="325" text-anchor="middle" font-family="system-ui,sans-serif" font-size="24" fill="#a6e22e" opacity="0.15" font-weight="700">LUXTHE</text>
+</svg>
