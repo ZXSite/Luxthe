@@ -14,14 +14,20 @@
 {{- $limit := default 10 .Params.limit -}}
 {{- $icon := default .Params.taxonomy .Params.icon -}}
 {{- $showLink := default true .Params.showLink -}}
+{{- $showHeading := default true .Params.showHeading -}}
 {{- $widgetClass := printf "widget-%s" .Params.taxonomy -}}
 {{- $headingURL := "" -}}
 {{- if and $showLink $taxonomyPage -}}
     {{- $headingURL = $taxonomyPage.RelPermalink -}}
 {{- end -}}
 
+{{- if $taxonomy -}}
+{{- $terms := first $limit $taxonomy.ByCount -}}
+{{- with $terms -}}
 <section class="widget tagCloud {{ $widgetClass }}">
+    {{- if $showHeading -}}
     {{ partial "widget/heading.html" (dict "Icon" $icon "Title" $widgetTitle "URL" $headingURL) }}
+    {{- end -}}
 
     <div class="tagCloud-tags">
         {{ range first $limit $taxonomy.ByCount }}
@@ -29,3 +35,5 @@
         {{ end }}
     </div>
 </section>
+{{- end -}}
+{{- end -}}

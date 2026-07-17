@@ -52,9 +52,8 @@ hasCJKLanguage = true
         ]
         page = [
             { type = "search" },
-            { type = "toc" },
             { type = "categories", params = { limit = 10 } },
-            { type = "tag-cloud", params = { limit = 10 } },
+            { type = "toc" },
         ]
     [params.colorScheme]
         toggle = true
