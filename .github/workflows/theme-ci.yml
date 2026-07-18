@@ -171,6 +171,91 @@ jobs:
           fi
           echo "Preset matrix OK"
 
+      - name: "Final release regression assertions"
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # 中文分类标题
+          grep -q '<title>分类</title>' \
+            exampleSite/public/categories/index.html
+          grep -q '<h1 class=section-term>分类</h1>' \
+            exampleSite/public/categories/index.html
+
+          # 中文分类项的父级标签
+          grep -q '<p class=section-title>分类</p>' \
+            "exampleSite/public/categories/分享/index.html"
+
+          # 中文 404
+          grep -q '<title>页面未找到</title>' \
+            exampleSite/public/404.html
+
+          # 中文页面不能残留英文特色图片说明
+          if grep -R -q 'Featured image of post' exampleSite/public; then
+            echo "FAIL: Chinese output contains untranslated featured-image alt text"
+            exit 1
+          fi
+          echo "Regression assertions OK"
+
+      - name: "Verify minimal empty site"
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          minimal="$RUNNER_TEMP/luxthe-minimal"
+          output="$RUNNER_TEMP/luxthe-minimal-public"
+
+          mkdir -p "$minimal"
+
+          printf '%s\n' \
+            'baseURL = "https://example.com/"' \
+            'title = "Minimal"' \
+            > "$minimal/hugo.toml"
+
+          hugo \
+            --source "$minimal" \
+            --themesDir "$(dirname "$GITHUB_WORKSPACE")" \
+            --theme LuxTHE \
+            --destination "$output" \
+            --gc \
+            --minify \
+            --panicOnWarning
+
+          grep -q 'layout-shell--without-widgets' "$output/index.html"
+
+          if grep -q 'widget-sidebar' "$output/index.html"; then
+            echo "FAIL: Empty site rendered an empty widget sidebar"
+            exit 1
+          fi
+          echo "Minimal site OK"
+
+      - name: "Verify pagination title"
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          config="$RUNNER_TEMP/pagination.toml"
+          output="$RUNNER_TEMP/pagination-public"
+
+          printf '%s\n' \
+            '[pagination]' \
+            'pagerSize = 1' \
+            > "$config"
+
+          hugo \
+            --source exampleSite \
+            --themesDir ../.. \
+            --theme LuxTHE \
+            --config "hugo.toml,$config" \
+            --destination "$output" \
+            --gc \
+            --minify \
+            --panicOnWarning
+
+          grep -q '<title>第 2 页 - 首页</title>' \
+            "$output/page/2/index.html"
+          echo "Pagination title OK"
+
       - name: "Deterministic build check (5x)"
         run: |
           hashes="$RUNNER_TEMP/hashes.txt"; : > "$hashes"
