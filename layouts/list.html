@@ -24,9 +24,9 @@
                 <p class="section-count">
                     {{- if eq .Kind "taxonomy" -}}
                         {{- if eq .Type "tags" -}}
-                            {{ len .Pages }} 个标签
+                            {{ T "list.tag" (len .Pages) }}
                         {{- else if eq .Type "categories" -}}
-                            {{ len .Pages }} 个分类
+                            {{ T "list.category" (len .Pages) }}
                         {{- else -}}
                             {{ T "list.page" (len .Pages) }}
                         {{- end -}}

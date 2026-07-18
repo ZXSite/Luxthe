@@ -1,8 +1,8 @@
-# Luxthe configuration
+# LuxTHE configuration
 
-Luxthe requires Hugo Extended 0.164.0+. The root `hugo.toml` contains safe defaults; a site's values override them.
+LuxTHE requires Hugo Extended 0.164.0+. The root `hugo.toml` contains safe defaults; a site's values override them.
 
-The theme-level `hugo.toml` is intentional. Hugo loads a theme as a component and merges the project configuration first, followed by theme defaults. `config/_default` is an alternative way to split configuration, not a requirement for a standalone theme. Luxthe deliberately has no `module.toml`, `go.mod`, module import, or network-fetched build dependency.
+The theme-level `hugo.toml` is intentional. Hugo loads a theme as a component and merges the project configuration first, followed by theme defaults. `config/_default` is an alternative way to split configuration, not a requirement for a standalone theme. LuxTHE deliberately has no `module.toml`, `go.mod`, module import, or network-fetched build dependency.
 
 ## Core site settings
 
@@ -69,7 +69,7 @@ page = [
 ]
 ```
 
-On desktop main-section article pages, local search is pinned before this configurable array and duplicate `search` entries are ignored. The search field remains the target of `Ctrl+K` on Windows/Linux and `Command+K` on macOS.
+Search is rendered only when the corresponding widgets array contains `{ type = "search" }` and a translated search page with JSON output exists. Duplicate `search` entries are automatically removed. Empty arrays suppress the widget sidebar entirely. The search field remains the target of `Ctrl+K` on Windows/Linux and `Command+K` on macOS.
 
 Hugo merges project configuration before theme defaults. When a site defines `params.widgets.homepage` or `params.widgets.page`, that array replaces the theme array rather than extending it. LuxTHE-based sites should remove their old page array or follow [the migration guide](migrating-from-luxrex.md).
 
@@ -95,11 +95,11 @@ appleTouchIcon = "apple-touch-icon.png"
 webmanifest = "site.webmanifest"
 ```
 
-Luxthe generates subpath-safe URLs for these files. Local files under the site's or theme's `assets` directory are also resolved through Hugo resources. When any structured icon setting is present, it takes precedence over the legacy `params.favicon` value.
+LuxTHE generates subpath-safe URLs for these files. Local files under the site's or theme's `assets` directory are also resolved through Hugo resources. When any structured icon setting is present, it takes precedence over the legacy `params.favicon` value.
 
 ## Overrides and integrations
 
-Site files override theme files at the same path. Use `assets/scss/custom.scss` for CSS and the `head/custom.html` or `footer/custom.html` partials for additional markup. To add comments or analytics, override the matching `extensions/*.html` partial and enable its parameter. Audit privacy, consent and CSP requirements yourself; Luxthe deliberately ships no provider adapters.
+Site files override theme files at the same path. Use `assets/scss/custom.scss` for CSS and the `head/custom.html` or `footer/custom.html` partials for additional markup. To add comments or analytics, override the matching `extensions/*.html` partial and enable its parameter. Audit privacy, consent and CSP requirements yourself; LuxTHE deliberately ships no provider adapters.
 
 ## 头像（v3.6.0+）
 
@@ -125,7 +125,7 @@ showEmptyPresets = true   # true: 无文章的预设分类也显示在侧栏; �
 
 多语言站点请把分类分支页放进各自语言的 contentDir。
 
-## 挂件（v3.7.0 起为配置驱动）
+## 挂件（v3.6.8 起为配置驱动）
 
 `params.widgets.homepage` / `params.widgets.page` 数组**完全决定**渲染结果：
 

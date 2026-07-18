@@ -1,6 +1,6 @@
 # Cloudflare Pages Git deployment
 
-This guide targets Cloudflare Pages connected directly to a Git repository. Commit the Hugo site with Luxthe at `themes/LuxTHE` (copied or as an initialized submodule).
+This guide targets Cloudflare Pages connected directly to a Git repository. Commit the Hugo site with LuxTHE at `themes/LuxTHE` (copied or as an initialized submodule).
 
 ## Build settings
 

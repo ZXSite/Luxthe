@@ -86,4 +86,9 @@
         border-top: 1px solid var(--card-separator-color);
         padding-top: var(--widget-separation);
     }
+
+    .widget-categories + .widget-toc {
+        border-top: 1px solid var(--card-separator-color);
+        padding-top: var(--widget-separation);
+    }
 }

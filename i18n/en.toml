@@ -10,6 +10,14 @@ section = "Section"
 one = "{{ .Count }} page"
 other = "{{ .Count }} pages"
 
+[list.tag]
+one = "{{ .Count }} tag"
+other = "{{ .Count }} tags"
+
+[list.category]
+one = "{{ .Count }} category"
+other = "{{ .Count }} categories"
+
 [list.subsection]
 one = "Subsection"
 other = "Subsections"
