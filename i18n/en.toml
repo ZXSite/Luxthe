@@ -32,6 +32,9 @@ lastUpdatedOn = "Last updated on"
 one = "{{ .Count }} minute read"
 other = "{{ .Count }} minutes read"
 
+[article.featuredImage]
+other = "Featured image for {{ .Title }}"
+
 [article.alert]
 note = "Note"
 tip = "Tip"

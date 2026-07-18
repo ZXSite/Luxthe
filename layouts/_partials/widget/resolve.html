@@ -36,6 +36,30 @@
                 {{- $tocEnabled := default $page.Site.Params.article.toc $page.Params.toc -}}
                 {{- $ok = and (eq $scope "page") $tocEnabled (ge (len $page.TableOfContents) 100) -}}
             {{- end -}}
+            {{- if and $ok (eq $type "categories") -}}
+                {{- with index $page.Site.Taxonomies "categories" -}}
+                    {{- $ok = gt (len .) 0 -}}
+                {{- else -}}
+                    {{- $ok = false -}}
+                {{- end -}}
+            {{- end -}}
+            
+            {{- if and $ok (eq $type "tag-cloud") -}}
+                {{- with index $page.Site.Taxonomies "tags" -}}
+                    {{- $ok = gt (len .) 0 -}}
+                {{- else -}}
+                    {{- $ok = false -}}
+                {{- end -}}
+            {{- end -}}
+            
+            {{- if and $ok (eq $type "archives") -}}
+                {{- $archivesPage := first 1 (where $page.Site.Pages "Layout" "==" "archives") -}}
+                {{- $archiveEntries := partial "helper/pages.html" $page.Site.Home -}}
+                {{- $ok = and
+                    (gt (len $archivesPage) 0)
+                    (gt (len $archiveEntries) 0)
+                -}}
+            {{- end -}}
             {{- if $ok -}}
                 {{- $widgets = $widgets | append (dict "type" $type "params" $params) -}}
                 {{- $seen = merge $seen (dict $type true) -}}

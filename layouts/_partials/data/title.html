@@ -1,4 +1,4 @@
-{{- $pageTitle := .Title -}}
+{{- $pageTitle := partial "data/display-title.html" . -}}
 {{- $siteTitle := .Site.Title -}}
 {{- $paginator := partial "helper/paginator.html" . -}}
 
@@ -6,7 +6,9 @@
 
 {{- if and $paginator $paginator.HasPrev -}}
     <!-- Add page number-->
-    {{ $title = $title | append (printf "Page %d" $paginator.PageNumber) }}
+    {{ $title = $title | append (
+        T "pagination.page" (dict "Number" $paginator.PageNumber)
+    ) }}
 {{- end -}}
 
 {{- $title = $title | append (default $siteTitle $pageTitle) -}}

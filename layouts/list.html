@@ -10,7 +10,7 @@
                     {{ T "list.section" }}
                 {{- end -}}
             {{- else if eq .Kind "term" -}}
-                {{- with .Parent -}}{{- .Title -}}{{- end -}}
+                {{- partial "data/display-title.html" .Parent -}}
             {{- else if eq .Parent (.GetPage "/") -}}
                 {{ T "list.section" }}
             {{- else -}}
@@ -20,7 +20,7 @@
 
         <div class="section-card">
             <div class="section-details">
-                <h1 class="section-term">{{ .Title }}</h1>
+                <h1 class="section-term">{{ partial "data/display-title.html" . }}</h1>
                 <p class="section-count">
                     {{- if eq .Kind "taxonomy" -}}
                         {{- if eq .Type "tags" -}}

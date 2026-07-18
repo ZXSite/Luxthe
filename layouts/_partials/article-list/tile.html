@@ -10,7 +10,7 @@
                 "Resize" .Site.Params.ImageProcessing.Thumbnail.Enabled
                 "Attributes" (dict
                     "src" $image.Permalink
-                    "alt" (printf "Featured image of post %s" .Title)
+                    "alt" (T "article.featuredImage" (dict "Title" .Title))
                     "loading" "lazy"
                     "width" $image.Width
                     "height" $image.Height

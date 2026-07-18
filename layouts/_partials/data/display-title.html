@@ -1,0 +1,15 @@
+{{- /* display-title.html — returns the user-visible title for a page,
+      with i18n overrides for taxonomy roots and 404. */ -}}
+{{- $title := .Title -}}
+
+{{- if eq .Kind "404" -}}
+    {{- $title = T "notFound.title" -}}
+{{- else if and (eq .Kind "taxonomy") (not .File) -}}
+    {{- if eq .Type "tags" -}}
+        {{- $title = T "widget.tagCloud.title" -}}
+    {{- else if eq .Type "categories" -}}
+        {{- $title = T "widget.categoriesCloud.title" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $title -}}
