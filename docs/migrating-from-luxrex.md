@@ -66,7 +66,7 @@ Without a valid local search page, LuxTHE intentionally omits the search input, 
 
 ## 7. Clear generated resources and deploy
 
-Remove the site's generated `resources/`, `public/`, and `.cache/` directories before the first v2 build. Do not delete source assets or content. Build with the pinned extended version:
+Remove the site's generated `resources/`, `public/`, and `.cache/` directories before the first migration build. Do not delete source assets or content. Build with the pinned extended version:
 
 ```bash
 hugo --gc --minify
