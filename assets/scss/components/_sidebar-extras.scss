@@ -86,6 +86,11 @@
     color: var(--card-text-color-main);
     cursor: pointer;
 }
+
+[data-scheme="dark"] #dark-mode-toggle-mobile {
+    color: var(--accent-color);
+}
+
 .mobile-toggle-btn svg {
     width: 20px;
     height: 20px;
