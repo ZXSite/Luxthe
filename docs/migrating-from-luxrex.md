@@ -1,6 +1,6 @@
-# Migrating a LuxTHE-based site to LuxTHE v3.6.8
+# Migrating an existing site to LuxTHE v3.6.8+
 
-LuxTHE v3.6.8 uses its own semantic Grid shell. A Hugo project still overrides files supplied by a theme, so copied LuxTHE layouts, assets, and configuration must be removed or intentionally rewritten before the first v3.6.8 deployment.
+LuxTHE v3.6.8 and later use a semantic CSS Grid shell. A Hugo project still overrides files supplied by a theme, so copied LuxTHE layouts, assets, and configuration must be removed or intentionally rewritten before the first migration deployment.
 
 ## 1. Install LuxTHE as a theme
 
@@ -14,13 +14,13 @@ Do not leave the archive under a different directory name while configuring `the
 
 ## 2. Remove the LuxTHE module import
 
-Delete the LuxTHE import from `config/_default/module.toml`. If `go.mod` and `go.sum` exist only to download LuxTHE, remove both files. LuxTHE builds without Hugo Modules and does not fetch a theme over the network.
+Delete the LuxTHE import from the site's Hugo configuration, for example `config/_default/module.toml` or `hugo.toml`. If `go.mod` and `go.sum` exist only to download LuxTHE, remove both files. LuxTHE builds without Hugo Modules and does not fetch a theme over the network.
 
 If the site uses other Hugo Modules, keep its module files and remove only the LuxTHE import.
 
 ## 3. Remove copied LuxTHE layouts
 
-Files under the site's root `layouts/` override `themes/LuxTHE/layouts/`. Delete copied LuxTHE templates unless they are deliberate LuxTHE v3.6.8 overrides. In particular, old `baseof.html`, sidebar partials, and search partials prevent the new semantic shell from rendering.
+Files under the site's root `layouts/` override `themes/LuxTHE/layouts/`. Delete copied LuxTHE templates unless they are deliberate LuxTHE v3.6.8+ overrides. In particular, old `baseof.html`, sidebar partials, and search partials prevent the new semantic shell from rendering.
 
 ## 4. Remove physical sidebar CSS
 
@@ -33,11 +33,11 @@ flex-direction: row-reverse;
 .main-container.flex.on-phone--column
 ```
 
-LuxTHE v3.6.8 uses `widget-sidebar | main | site-sidebar` at desktop widths. The new shell does not use physical left/right names, negative column order, or `row-reverse`.
+LuxTHE v3.6.8 and later use `widget-sidebar | main | site-sidebar` at desktop widths. The new shell does not use physical left/right names, negative column order, or `row-reverse`.
 
 ## 5. Update `widgets.page`
 
-A site's arrays replace the theme arrays. Remove the old `widgets.page = [{ type = "toc" }]` assignment to inherit the v3.6.8 defaults, or configure the discovery widgets explicitly:
+A site's arrays replace the theme arrays. Remove the old `widgets.page = [{ type = "toc" }]` assignment to inherit the current theme defaults, or configure the discovery widgets explicitly:
 
 ```toml
 [params.widgets]
@@ -62,7 +62,7 @@ outputs = ["HTML", "JSON"]
 +++
 ```
 
-Without a valid local search page, LuxTHE intentionally omits the search input, mobile search link, index request, and search scripts.
+Without a valid local search page, LuxTHE intentionally omits the search input, mobile search form, index request, and search scripts.
 
 ## 7. Clear generated resources and deploy
 
@@ -76,10 +76,22 @@ For Cloudflare Pages, use `HUGO_VERSION=0.164.0` and the build command documente
 
 ## Expected desktop result
 
+### Homepage
+
+```text
+widget-sidebar | main         | site-sidebar
+search         | article list | avatar and site identity
+categories     |              | primary navigation
+tags           |              | introduction and contacts
+archives       |              | language and color scheme
+```
+
+### Article page
+
 ```text
 widget-sidebar | main | site-sidebar
-search          | post | avatar and site identity
-categories      |      | primary navigation
-tags            |      | introduction and contacts
-TOC             |      | language and color scheme
+categories     | post | avatar and site identity
+tags           |      | primary navigation
+TOC            |      | introduction and contacts
+               |      | language and color scheme
 ```
