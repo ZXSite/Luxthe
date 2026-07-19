@@ -1,15 +1,26 @@
 # LuxTHE 文章模板
 
-将以下内容复制到 `content/posts/<slug>/index.md`，替换字段后即可写作。
+## Hugo Leaf Bundle 完整结构
 
-## 完整模板
+```
+content/posts/<slug>/
+├── index.md          ← 文章正文（必需）
+├── cover.jpg         ← 封面图（可选，frontmatter 用 image = "cover.jpg"）
+├── image-1.jpg       ← 文章插图（可选，Markdown 中直接引用）
+└── image-2.png       ← 更多插图……
+```
+
+每篇文章是一个 **Leaf Bundle**（叶子包），目录名即 `slug`。Hugo 会将该目录下所有资源视为页面资源，自动处理响应式图片。
+
+## Frontmatter 模板
 
 ```markdown
 +++
 title = ""
 description = ""
-date = "2026-07-19"
-lastmod = "2026-07-19"
+slug = ""
+date = "2026-07-19T00:00:00+08:00"
+lastmod = "2026-07-19T00:00:00+08:00"
 draft = false
 
 [taxonomies]
@@ -18,12 +29,14 @@ tags = [""]
 
 [params]
 toc = true
-image = ""
+image = "cover.jpg"
 +++
 
 <!--more-->
 
 正文从这里开始……
+
+![插图说明](image-1.jpg)
 ```
 
 ## 字段说明
@@ -32,44 +45,39 @@ image = ""
 |------|------|:--:|
 | `title` | 文章标题 | ✅ |
 | `description` | 摘要/SEO 描述，列表卡片也会显示 | |
-| `date` | 发布日期，格式 `YYYY-MM-DD` | ✅ |
-| `lastmod` | 最后修改日期，不填默认同 `date` | |
+| `slug` | URL 路径，不填默认取目录名 | |
+| `date` | 发布日期，ISO 8601 格式 | ✅ |
+| `lastmod` | 最后修改日期 | |
 | `draft` | `true` = 草稿不发布，`false` = 发布 | ✅ |
-| `categories` | 分类，四选一：`"生活"` `"工作"` `"学习"` `"分享"` | ✅ |
-| `tags` | 标签列表，可多个，如 `["Hugo", "博客"]` | |
-| `toc` | `true` 显示文章目录，`false` 隐藏 | |
-| `image` | 封面图 URL，留空则使用主题随机几何封面 | |
-| `<!--more-->` | 摘要分割线，在此之前的内容显示在首页列表卡片 | |
+| `categories` | 四选一：`"生活"` `"工作"` `"学习"` `"分享"` | ✅ |
+| `tags` | 标签列表，如 `["Hugo", "博客"]` | |
+| `toc` | `true` 显示目录，`false` 隐藏 | |
+| `image` | 封面图，支持：本地文件名 `"cover.jpg"` 或远程 URL `"https://..."` ，留空则使用随机几何封面 | |
+| `<!--more-->` | 摘要分割线，之前的内容显示在首页列表卡片 | |
 
-## 文件位置
+## 封面图的三种方式
 
+| 方式 | `image` 值 | 说明 |
+|------|-----------|------|
+| 本地文件 | `"cover.jpg"` | 放在 Leaf Bundle 同目录下 |
+| 远程 URL | `"https://images.unsplash.com/..."` | 构建时下载并处理 |
+| 主题随机 | 留空或不写 | 从 13 个几何 SVG 中确定性选择 |
+
+## 文章插图
+
+图片直接放在 Leaf Bundle 目录中，Markdown 用相对路径引用：
+
+```markdown
+![Alt 文字](image-1.jpg)
 ```
-content/posts/<slug>/index.md
-```
 
-每篇文章必须是 Hugo 页面包（Leaf Bundle），图片等资源放在同目录下。
+Hugo 会自动生成响应式 `srcset`（480/800/1200/1600 宽度）。
 
 ---
 
 ## 支持的写作功能
 
-### 插图
-
-标准 Markdown 图片自动生成响应式 `srcset`：
-
-```markdown
-![图片说明](image.jpg)
-```
-
-### 引用块
-
-```markdown
-> 普通引用文字
-```
-
 ### 提示框（Alert）
-
-四种语义类型，自带图标和标题：
 
 ```markdown
 > [!NOTE]
@@ -85,10 +93,10 @@ content/posts/<slug>/index.md
 > 这是一条警告
 ```
 
-### 带署名的引用（Shortcode）
+### 引用署名（Shortcode）
 
 ```markdown
-{{< quote author="鲁迅" source="《呐喊》" url="https://example.com" >}}
+{{< quote author="鲁迅" source="《呐喊》" >}}
 其实地上本没有路，走的人多了，也便成了路。
 {{< /quote >}}
 ```
@@ -96,19 +104,13 @@ content/posts/<slug>/index.md
 ### 视频（Shortcode）
 
 ```markdown
-{{< video src="video.mp4" poster="cover.jpg" >}}
+{{< video src="demo.mp4" poster="cover.jpg" >}}
 ```
 
-### B 站视频（Shortcode）
+### B 站 / 腾讯视频（Shortcode）
 
 ```markdown
 {{< bilibili BV1xx411c7mD >}}
-{{< bilibili av123456 2 >}}   <!-- 第二个参数是分 P -->
-```
-
-### 腾讯视频（Shortcode）
-
-```markdown
 {{< tencent vid="x0022vxqg4p" >}}
 ```
 
@@ -120,26 +122,14 @@ print("Hello, LuxTHE")
 ```
 ````
 
-### 表格
+### 表格 / 脚注
 
 ```markdown
 | 列 A | 列 B |
 |------|------|
 | 值 1 | 值 2 |
-```
 
-### 数学公式（KaTeX 需自行集成）
+文字[^1]
 
-```markdown
-$$
-E = mc^2
-$$
-```
-
-### 脚注
-
-```markdown
-这是一段文字[^1]
-
-[^1]: 这是脚注内容。
+[^1]: 脚注内容
 ```
