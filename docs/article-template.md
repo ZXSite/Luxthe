@@ -1,16 +1,20 @@
 # LuxTHE 文章模板
 
-## Hugo Leaf Bundle 完整结构
+## Hugo Leaf Bundle 结构
 
 ```
 content/posts/<slug>/
 ├── index.md          ← 文章正文（必需）
-├── cover.jpg         ← 封面图（可选，frontmatter 用 image = "cover.jpg"）
-├── image-1.jpg       ← 文章插图（可选，Markdown 中直接引用）
-└── image-2.png       ← 更多插图……
+├── cover.png         ← 封面图（1200×630 推荐）
+├── images/           ← 所有插图
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   └── image3.jpg
+└── files/            ← 下载文件（可选）
+    └── resume.pdf
 ```
 
-每篇文章是一个 **Leaf Bundle**（叶子包），目录名即 `slug`。Hugo 会将该目录下所有资源视为页面资源，自动处理响应式图片。
+每篇文章是一个 **Leaf Bundle**（叶子包），目录名即 `slug`。Hugo 将目录内所有文件视为页面资源，自动生成响应式图片。
 
 ## Frontmatter 模板
 
@@ -29,14 +33,16 @@ tags = [""]
 
 [params]
 toc = true
-image = "cover.jpg"
+image = "cover.png"
 +++
 
 <!--more-->
 
 正文从这里开始……
 
-![插图说明](image-1.jpg)
+![插图说明](images/image1.jpg)
+
+[下载文件](files/resume.pdf)
 ```
 
 ## 字段说明
@@ -52,26 +58,28 @@ image = "cover.jpg"
 | `categories` | 四选一：`"生活"` `"工作"` `"学习"` `"分享"` | ✅ |
 | `tags` | 标签列表，如 `["Hugo", "博客"]` | |
 | `toc` | `true` 显示目录，`false` 隐藏 | |
-| `image` | 封面图，支持：本地文件名 `"cover.jpg"` 或远程 URL `"https://..."` ，留空则使用随机几何封面 | |
+| `image` | 封面图，支持：本地文件名 `"cover.png"` 或远程 URL `"https://..."` ，留空则使用随机几何封面 | |
 | `<!--more-->` | 摘要分割线，之前的内容显示在首页列表卡片 | |
 
 ## 封面图的三种方式
 
 | 方式 | `image` 值 | 说明 |
 |------|-----------|------|
-| 本地文件 | `"cover.jpg"` | 放在 Leaf Bundle 同目录下 |
+| 本地文件 | `"cover.png"` | 放在 Leaf Bundle 根目录 |
 | 远程 URL | `"https://images.unsplash.com/..."` | 构建时下载并处理 |
 | 主题随机 | 留空或不写 | 从 13 个几何 SVG 中确定性选择 |
 
 ## 文章插图
 
-图片直接放在 Leaf Bundle 目录中，Markdown 用相对路径引用：
+图片统一放在 `images/` 子目录，Markdown 用相对路径引用：
 
 ```markdown
-![Alt 文字](image-1.jpg)
+![Alt 文字](images/image1.jpg)
 ```
 
 Hugo 会自动生成响应式 `srcset`（480/800/1200/1600 宽度）。
+
+**注意**：Hugo 不会递归通配图片，必须写完整文件名，不能写成 `images/*`。
 
 ---
 
